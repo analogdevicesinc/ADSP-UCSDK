@@ -1,0 +1,43 @@
+From 3a2d7e7459bf6acc73b3f0451ee17f52ae7cf324 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Fri, 16 Apr 2021 18:19:41 +0000
+Subject: [PATCH] Expand L2 space for SC58x
+
+---
+ arch/arm/boot/dts/sc57x.dtsi | 2 +-
+ arch/arm/boot/dts/sc58x.dtsi | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm/boot/dts/sc57x.dtsi b/arch/arm/boot/dts/sc57x.dtsi
+index d1e78ba086f8..697acf71ba2d 100644
+--- a/arch/arm/boot/dts/sc57x.dtsi
++++ b/arch/arm/boot/dts/sc57x.dtsi
+@@ -82,7 +82,7 @@
+ 		ranges = <0 0x20000000 0x1000>;
+ 	};
+ 
+-	sram1: sram-reserved@20004000 {
++	sram1: sram-reserved@20004000 { /* ASB SRAM 1007 KB */
+ 		compatible = "mmio-sram";
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+diff --git a/arch/arm/boot/dts/sc58x.dtsi b/arch/arm/boot/dts/sc58x.dtsi
+index 7cd6a3c78ad1..2901f72c5568 100644
+--- a/arch/arm/boot/dts/sc58x.dtsi
++++ b/arch/arm/boot/dts/sc58x.dtsi
+@@ -84,12 +84,12 @@
+ 		ranges = <0 0x20080000 0x1000>;
+ 	};
+ 
+-	sram1: sram-reserved@20084000 {
++	sram1: sram-reserved@20084000 { /* ASB SRAM 239 KB */
+ 		compatible = "mmio-sram";
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+-		reg = <0x20084000 0x3B000>;
+-		ranges = <0 0x20084000 0x3B000>;
++		reg = <0x20084000 0x3BFFF>;
++		ranges = <0 0x20084000 0x3BFFF>;
+ 	};
+ 
+ 	scb {
