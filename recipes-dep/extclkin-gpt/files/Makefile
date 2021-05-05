@@ -1,4 +1,8 @@
+CFILES := $(notdir $(wildcard $M/extclkin-gpt-*.c))
+OBJS := $(CFILES:.c=.o)
+
 obj-m := extclkin-gpt.o
+extclkin-gpt-y := $(OBJS)
 
 CFLAGS_extclkin-gpt.o :=-DDEBUG
 
