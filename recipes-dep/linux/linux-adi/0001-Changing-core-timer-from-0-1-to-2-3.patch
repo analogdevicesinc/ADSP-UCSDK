@@ -1,0 +1,65 @@
+From a2a2ffcf3ffc13569e55522fcf71788bc252fc72 Mon Sep 17 00:00:00 2001
+From: Prasanna <prasanna.thirumaleshwara@analog.com>
+Date: Tue, 27 Apr 2021 16:11:08 +0530
+Subject: [PATCH] Changing core timer from 0-1 to 2-3
+
+---
+ arch/arm/boot/dts/sc58x.dtsi | 8 ++++----
+ arch/arm/mach-sc58x/core.c   | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/arch/arm/boot/dts/sc58x.dtsi b/arch/arm/boot/dts/sc58x.dtsi
+index 2901f72c5568..7ef43eef9e07 100644
+--- a/arch/arm/boot/dts/sc58x.dtsi
++++ b/arch/arm/boot/dts/sc58x.dtsi
+@@ -179,28 +179,28 @@
+ 		};
+ 
+ 		gptimer0: gptimer@0x31001060 {
+-			compatible = "adi,sc58x-timer-core";
++			compatible = "adi,sc58x-timer";
+ 			reg = <0x31001060 0x20>;
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
+ 
+ 		gptimer1: gptimer@0x31001080 {
+-			compatible = "adi,sc58x-timer-core";
++			compatible = "adi,sc58x-timer";
+ 			reg = <0x31001080 0x20>;
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <GIC_SPI 27 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
+ 
+ 		gptimer2: gptimer@0x310010A0 {
+-			compatible = "adi,sc58x-timer";
++			compatible = "adi,sc58x-timer-core";
+ 			reg = <0x310010A0 0x20>;
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
+ 
+ 		gptimer3: gptimer@0x310010C0 {
+-			compatible = "adi,sc58x-timer";
++			compatible = "adi,sc58x-timer-core";
+ 			reg = <0x310010C0 0x20>;
+ 			interrupt-parent = <&gic>;
+ 			interrupts = <GIC_SPI 29 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm/mach-sc58x/core.c b/arch/arm/mach-sc58x/core.c
+index 250e38439a1d..8b25affbb3d1 100644
+--- a/arch/arm/mach-sc58x/core.c
++++ b/arch/arm/mach-sc58x/core.c
+@@ -43,8 +43,8 @@
+ 
+ #include "core.h"
+ 
+-#define TIMER_CLOCKSOURCE 1
+-#define TIMER_CLOCKEVENT  0
++#define TIMER_CLOCKSOURCE 2
++#define TIMER_CLOCKEVENT  3
+ 
+ static struct sc58x_gptimer *timer_clock, *timer_event;
+ 
+-- 
+2.17.1
+
