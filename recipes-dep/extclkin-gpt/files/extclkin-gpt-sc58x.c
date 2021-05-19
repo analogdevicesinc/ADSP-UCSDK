@@ -28,7 +28,7 @@
 #include <linux/uaccess.h>
 
 #define ROLLOVER_DETECTION_BY_IRPT_LATCH   (0)
-#define PRINTK_DBG(...)  //printk(__VA_ARGS__)  
+#define PRINTK_DBG(...)  printk(__VA_ARGS__)  
 
 //#define DEV_DBG(...)  dev_dbg(__VA_ARGS__)
 #define DEV_DBG(...) 
@@ -51,11 +51,11 @@
 #define MAX_LINE_LENGTH       (2 * NS_VALUE_MAX_DIGITS + 2)
 #define SECONDS_PER_ROLLOVER  429
 #define NS_PER_ROLLOVER       ((u64)SECONDS_PER_ROLLOVER * (u64)1000000000UL)
-#define GPT_NO                 0
+#define GPT_NO                 1
 #define GPT_MASK               (1<<GPT_NO)
 #define SUCCESS                0
 #define READ_BUFFER_SIZE       (MAX_LINE_LENGTH + 1)    
-#define TIMER_GROUP             0x31001004
+#define TIMER_GROUP            0x31001004
 
 
 /* =========================
@@ -105,7 +105,7 @@ struct sc57x_extclkin_gpt {
     dev_t devNo;
     struct class *devClass;
     struct device *thisDev;
-	void __iomem *io_base;
+    void __iomem *io_base;
     u32 currCnt;
 };
 
@@ -136,10 +136,10 @@ struct gptimerext_group_regs {
 #define GPTIMER_WID_OFF   0xC
 #define GPTIMER_DLY_OFF   0x10
 
-#define PORTE_MUX_REG_IO  __io_address(0x31004230)
-#define PORTE_FER_REG_IO  __io_address(0x31004200)
-#define TMR0_MUX_ENABLE         (2<<18)
-#define TMR0_FER_ENABLE         (1<<9)
+#define PORTB_MUX_REG_IO  __io_address(0x310040B0)
+#define PORTB_FER_REG_IO  __io_address(0x31004080)
+#define TMR1_MUX_ENABLE         (2<<30)
+#define TMR1_FER_ENABLE         (1<<15)
 
 static struct gptimerext_group_regs* const group_base = __io_address(TIMER_GROUP);
 static struct sc57x_extclkin_gpt extclkin_gpt;
@@ -179,6 +179,15 @@ static inline volatile u32 reg_read(u32 address)
 }
 
 /*
+ * Read a GPT register(16bit wide) with the given address,
+ * returning the result. 
+ */
+static inline volatile u32 reg_read_short(u32 address)
+{
+    return (volatile u32) readw(address);
+}
+
+/*
  * Write a GPT register with given address the given value. 
  */
 static inline void reg_write(u32 address, u32 value)
@@ -199,26 +208,31 @@ static inline void setup_gpt(void)
     u32 regAdr, status;
     u8 tmp;
 
-    if( GPT_NO == 0)
+    if( GPT_NO == 1)
     {
         //enable Mux
         //Setting up mux
-        regAdr = PORTE_MUX_REG_IO;
+        regAdr = PORTB_MUX_REG_IO;
         regVal = reg_read(regAdr);
-        regVal |= TMR0_MUX_ENABLE;
+        regVal |= TMR1_MUX_ENABLE;
         reg_write(regAdr, regVal);
         PRINTK_DBG("\n write PORTC MUX Reg address : %x, Reg value : %x", regAdr, regVal);   
 
-        regAdr = PORTE_FER_REG_IO;
+        regAdr = PORTB_FER_REG_IO;
         regVal = reg_read(regAdr);
-        regVal |= TMR0_FER_ENABLE;
+        regVal |= TMR1_FER_ENABLE;
         reg_write(regAdr, regVal);
         PRINTK_DBG("\n write PORTC FER Reg address : %x, Reg value : %x", regAdr, regVal);
     }
+	else
+	{
+		pr_err("Unsupported timer channel %d", GPT_NO);
+		return;
+	}
 
     //Confirming the whether timer is running or not
-    PRINTK_DBG("\n Timer Run %x read  %d ",&group_base->run, regVal);
-    regVal = reg_read(&group_base->run);
+    regVal = reg_read_short(&group_base->run);
+	PRINTK_DBG("\n Timer Run %x read  %d ",&group_base->run, regVal);
     if(regVal & GPT_MASK)
     {
         PRINTK_DBG("\n Timer %d is running", GPT_NO);
@@ -251,7 +265,7 @@ static inline void setup_gpt(void)
 #if ROLLOVER_DETECTION_BY_IRPT_LATCH
     //Data IMASK
     regAdr = &group_base->data_imsk;
-    regVal = reg_read(regAdr);
+    regVal = reg_read_short(regAdr);
     regVal |= (GPT_MASK);
     reg_write(regAdr, regVal);
 #endif
@@ -264,12 +278,12 @@ static inline void setup_gpt(void)
     PRINTK_DBG("\n write GPT Run set Reg address : %x, Reg value : %x", regAdr, regVal);
 
     //Confirming the whether timer is running or not
-    regVal = reg_read(&group_base->run);
+    regVal = reg_read_short(&group_base->run);
     if(regVal & GPT_MASK)
     {
         PRINTK_DBG("\n Timer %d is running", GPT_NO);
         PRINTK_DBG("\n Current Timer value :  %d ", get_count(&tmp));
-        pr_debug("\n Counter set up success");
+        PRINTK_DBG("\n Counter set up success");
     }
 
 }
