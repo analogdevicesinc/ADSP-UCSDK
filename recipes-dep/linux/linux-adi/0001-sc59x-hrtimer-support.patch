@@ -1,0 +1,33 @@
+From 90a036623704e74b0eca4572f8fa47ddaf627113 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Mon, 16 Aug 2021 16:25:24 +0000
+Subject: [PATCH] sc59x hrtimer support
+
+---
+ arch/arm/mach-sc59x/core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/arch/arm/mach-sc59x/core.c b/arch/arm/mach-sc59x/core.c
+index 7f2d72715657..26c88f531f0d 100644
+--- a/arch/arm/mach-sc59x/core.c
++++ b/arch/arm/mach-sc59x/core.c
+@@ -546,7 +546,6 @@ static int gptmr_set_state_oneshot(struct clock_event_device *evt)
+ {
+ 	int id = timer_event->id;
+ 
+-	while(1);
+ 	disable_gptimers(1 << id);
+ 	set_gptimer_config(timer_event, TIMER_OUT_DIS | TIMER_MODE_PWM
+ 			| TIMER_PULSE_HI | TIMER_IRQ_WID_DLY);
+@@ -596,7 +595,7 @@ static struct clock_event_device clockevent_gptmr = {
+ 	.name           = "sc59x_gptimer0",
+ 	.rating         = 300,
+ 	.shift          = 32,
+-	.features       = CLOCK_EVT_FEAT_PERIODIC,
++	.features       = CLOCK_EVT_FEAT_PERIODIC  | CLOCK_EVT_FEAT_ONESHOT,
+ 	.set_next_event = gptmr_set_next_event,
+ 	.set_state_periodic = gptmr_set_state_periodic,
+ 	.set_state_oneshot = gptmr_set_state_oneshot,
+-- 
+2.17.1
+
