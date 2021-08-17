@@ -1,7 +1,8 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI_append = "\ 
-            file://dep-4_19.cfg \
+            file://dep-5_4.cfg \
             file://0001-sc57x-hrtimer-support.patch \
             file://0005-sc58x-hrtimer-support.patch \
             file://0001-Changing-core-timer-from-0-1-to-2-3.patch \
+            file://0001-sc59x-hrtimer-support_5_4.patch \
 "
