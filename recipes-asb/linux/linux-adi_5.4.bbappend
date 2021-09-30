@@ -7,8 +7,9 @@ SRC_URI_append = "\
             file://0003-Expand-L2-space-for-SC58x.patch \
             file://0001-Enable-Sram-mmap-on-SC594_5_4.patch \
             file://0001-Update-physical-address-IOCTL-for-Kernel-5.2.patch \
+            file://disable_soc_snd.cfg \
 "
 KERNEL_FEATURES_remove_adsp-sc573-ezkit = " feature/snd_ezkit.scc"
 KERNEL_FEATURES_remove_adsp-sc589-ezkit = " feature/snd_ezkit.scc"
 KERNEL_FEATURES_remove_adsp-sc584-ezkit = " feature/snd_ezkit.scc"
-KERNEL_FEATURES_remove_adsp-sc594_som_ezkit = " feature/snd_ezkit.scc"
+KERNEL_FEATURES_remove_adsp-sc594_som_ezkit = " snd_ezkit.scc"
