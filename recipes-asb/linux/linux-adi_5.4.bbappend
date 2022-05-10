@@ -14,6 +14,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI_append = "\
             file://sram.cfg \
             file://REMOTEPROC.cfg \
+            file://disable_soc_snd.cfg \
             file://0001-IOCTL-call-to-get-last-used-physical-address.patch \
 "
 
