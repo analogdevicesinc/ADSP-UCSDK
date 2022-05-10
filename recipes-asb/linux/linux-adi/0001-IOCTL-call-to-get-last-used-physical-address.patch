@@ -1,44 +1,39 @@
-From 11b093a96b5362cafaf7615ea6f69e2017ed6145 Mon Sep 17 00:00:00 2001
+From 52774f999712e7a28f6168c631081d4f184588d6 Mon Sep 17 00:00:00 2001
 From: Harvin Almeida <harvin.almeida@analog.com>
-Date: Tue, 29 Sep 2020 18:52:33 +0000
-Subject: [PATCH] Added IOCTL to read last used physical address
+Date: Fri, 18 Mar 2022 19:58:24 +0000
+Subject: [PATCH] IOCTL call to get last used physical address
 
 ---
- drivers/misc/adi/sram_mmap.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ drivers/misc/adi/sram_mmap.c | 27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/misc/adi/sram_mmap.c b/drivers/misc/adi/sram_mmap.c
-index b177d82520e8..2b468f0663df 100644
+index 02854d6cfa67..ef5e3f3d3e71 100644
 --- a/drivers/misc/adi/sram_mmap.c
 +++ b/drivers/misc/adi/sram_mmap.c
-@@ -18,6 +18,7 @@
+@@ -15,8 +15,12 @@
+ #include <linux/genalloc.h>
+ #include <linux/miscdevice.h>
  #include <linux/platform_device.h>
- #include <mach/cpu.h>
- #include <mach/hardware.h>
 +#include <linux/ioctl.h>
- #ifdef CONFIG_ARCH_SC58X
- #include <mach/sc58x.h>
- #elif defined(CONFIG_ARCH_SC57X)
-@@ -26,6 +27,10 @@
  
  #define SRAM_MMAP_DRV_NAME		"sram_mmap"
- 
 +#define PHYSADDR _IOR(0x6B,0x01,unsigned long)
 +
 +unsigned long paddr = 0;
-+
+ 
  struct adi_sram_mmap {
  	struct miscdevice miscdev;
- 	struct gen_pool *sram_pool;
-@@ -68,7 +73,6 @@ static int sram_mmap(struct file *fp, struct vm_area_struct *vma)
+@@ -60,7 +64,7 @@ static int sram_mmap(struct file *fp, struct vm_area_struct *vma)
  				struct adi_sram_mmap, miscdev);
  	struct mmap_private_data *pdata;
  	size_t sram_size = vma->vm_end - vma->vm_start;
 -	unsigned long paddr;
++
  	int ret = 0;
  
  	/*  Allocate private pdata */
-@@ -109,8 +113,27 @@ static int sram_mmap(struct file *fp, struct vm_area_struct *vma)
+@@ -101,8 +105,29 @@ static int sram_mmap(struct file *fp, struct vm_area_struct *vma)
  	return ret;
  }
  
@@ -47,7 +42,7 @@ index b177d82520e8..2b468f0663df 100644
 +	int err=0;
 +
 +	if(_IOC_DIR(cmd) & _IOC_READ)
-+		err = !access_ok(VERIFY_WRITE, (void __user *)arg, _IOC_SIZE(cmd));
++		err = !access_ok((void __user *)arg, _IOC_SIZE(cmd));
 +
 +	switch (cmd)
 +	{
@@ -58,6 +53,8 @@ index b177d82520e8..2b468f0663df 100644
 +	default:
 +		break;
 +	}
++
++	return err;
 +}
 +
  static const struct file_operations sram_fops = {
@@ -66,3 +63,6 @@ index b177d82520e8..2b468f0663df 100644
  };
  
  static const struct of_device_id adi_sram_mmap_of_match[] = {
+-- 
+2.17.1
+
