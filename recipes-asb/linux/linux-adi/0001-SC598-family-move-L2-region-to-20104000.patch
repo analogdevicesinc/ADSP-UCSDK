@@ -1,0 +1,52 @@
+From 4a312bd1adc091edcdc042e0e9e5b81cfa315ca1 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Fri, 27 May 2022 15:20:24 +0000
+Subject: [PATCH] SC598 family move L2 region to 20104000
+
+---
+ arch/arm64/boot/dts/adi/sc598-som-ezkit.dts | 8 --------
+ arch/arm64/boot/dts/adi/sc59x-64.dtsi       | 6 +++---
+ 2 files changed, 3 insertions(+), 11 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts b/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
+index ec6a48e062b2..10101771a389 100644
+--- a/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
++++ b/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
+@@ -47,14 +47,6 @@
+ 		};
+ 	};
+ 
+-	sram2: sram-reserved@200C8000 {
+-		compatible = "mmio-sram";
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		reg = <0x200C8000 0x138000>;
+-		ranges = <0 0x200C8000 0x138000>; /*1248KiB*/
+-	};
+-
+ 	scb {
+ 		sharc0: core1-rproc@0x28240000 {
+ 			compatible = "adi,remoteproc";
+diff --git a/arch/arm64/boot/dts/adi/sc59x-64.dtsi b/arch/arm64/boot/dts/adi/sc59x-64.dtsi
+index c06647b88a16..2cf6880f3925 100644
+--- a/arch/arm64/boot/dts/adi/sc59x-64.dtsi
++++ b/arch/arm64/boot/dts/adi/sc59x-64.dtsi
+@@ -85,12 +85,12 @@
+ 		ranges = <0 0x20025000 0x1B000>; /*108KiB*/
+ 	};
+ 
+-	sram1: sram-reserved@20040000 {
++	sram1: sram-reserved@20104000 {
+ 		compatible = "mmio-sram";
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+-		reg = <0x20040000 0x40000>;
+-		ranges = <0 0x20040000 0x40000>; /*256KiB*/
++		reg = <0x20104000 0x40000>;
++		ranges = <0 0x20104000 0x40000>; /*256KiB*/
+ 	};
+ 
+ 	timer {
+-- 
+2.17.1
+

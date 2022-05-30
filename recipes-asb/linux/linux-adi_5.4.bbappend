@@ -30,6 +30,9 @@ SRC_URI_append_adsp-sc584-ezkit = "\
 SRC_URI_append_adsp-sc573-ezkit = "\
             file://0001-SC57x-Expand-sram1-to-end-of-L2-memory.patch \
 "
+SRC_URI_append_adsp-sc598-som-ezkit = "\
+            file://0001-SC598-family-move-L2-region-to-20104000.patch \
+"
 
 KERNEL_FEATURES_remove_adsp-sc573-ezkit = " feature/snd_ezkit.scc"
 KERNEL_FEATURES_remove_adsp-sc589-ezkit = " feature/snd_ezkit.scc"
