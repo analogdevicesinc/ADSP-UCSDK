@@ -18,7 +18,7 @@ SRC_URI_append = "\
             file://0001-IOCTL-call-to-get-last-used-physical-address.patch \
 "
 
-SRC_URI_append_adsp-sc594_som_ezkit = "\
+SRC_URI_append_adsp-sc594-som-ezkit = "\
             file://0001-SC594-Enable-Sram-mmap.patch \
 "
 SRC_URI_append_adsp-sc589-ezkit = "\
