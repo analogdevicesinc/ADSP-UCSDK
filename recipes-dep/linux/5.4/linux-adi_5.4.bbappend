@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/../${PN}:"
 SRC_URI_append = "\ 
             file://dep-5_4.cfg \            
 "
