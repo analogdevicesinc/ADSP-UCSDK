@@ -1,0 +1,1 @@
+inherit sc5xx-ucsdk
