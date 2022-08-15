@@ -1,0 +1,72 @@
+From c4afd1ff166d8c310110873e5996a69b4334e2b4 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Mon, 15 Aug 2022 16:24:21 -0500
+Subject: [PATCH] SC594 IOCTL to get physical address
+
+---
+ drivers/misc/adi/sram_mmap.c | 27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/misc/adi/sram_mmap.c b/drivers/misc/adi/sram_mmap.c
+index b177d82520e8..4d0034801f9b 100644
+--- a/drivers/misc/adi/sram_mmap.c
++++ b/drivers/misc/adi/sram_mmap.c
+@@ -18,12 +18,17 @@
+ #include <linux/platform_device.h>
+ #include <mach/cpu.h>
+ #include <mach/hardware.h>
++#include <linux/ioctl.h>
+ #ifdef CONFIG_ARCH_SC58X
+ #include <mach/sc58x.h>
+ #elif defined(CONFIG_ARCH_SC57X)
+ #include <mach/sc57x.h>
+ #endif
+ 
++#define PHYSADDR _IOR(0x6B,0x01,unsigned long)
++
++unsigned long paddr = 0;
++
+ #define SRAM_MMAP_DRV_NAME		"sram_mmap"
+ 
+ struct adi_sram_mmap {
+@@ -68,7 +73,6 @@ static int sram_mmap(struct file *fp, struct vm_area_struct *vma)
+ 				struct adi_sram_mmap, miscdev);
+ 	struct mmap_private_data *pdata;
+ 	size_t sram_size = vma->vm_end - vma->vm_start;
+-	unsigned long paddr;
+ 	int ret = 0;
+ 
+ 	/*  Allocate private pdata */
+@@ -109,8 +113,29 @@ static int sram_mmap(struct file *fp, struct vm_area_struct *vma)
+ 	return ret;
+ }
+ 
++static long sram_ioctl(struct file *file,unsigned int cmd, unsigned long arg)
++{
++	int err=0;
++
++	if(_IOC_DIR(cmd) & _IOC_READ)
++		err = !access_ok((void __user *)arg, _IOC_SIZE(cmd));
++
++	switch (cmd)
++	{
++	case PHYSADDR:
++		put_user(paddr,(unsigned long __user *)arg);
++		break;
++	
++	default:
++		break;
++	}
++
++	return err;
++}
++
+ static const struct file_operations sram_fops = {
+ 	.mmap		= sram_mmap,
++	.unlocked_ioctl = sram_ioctl,
+ };
+ 
+ static const struct of_device_id adi_sram_mmap_of_match[] = {
+-- 
+2.17.1
+
