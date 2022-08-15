@@ -1,6 +1,6 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/../${PN}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI_append = "\ 
-            file://dep-4_19.cfg \
+            file://dep-5_4.cfg \            
 "
 
 SRC_URI_append_adsp-sc589-ezkit = "\
