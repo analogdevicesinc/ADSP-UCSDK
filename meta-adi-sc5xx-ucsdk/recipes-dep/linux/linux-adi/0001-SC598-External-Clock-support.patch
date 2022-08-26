@@ -1,0 +1,48 @@
+From 668645cc3a5e713f1a79e83662537120c6b7a140 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Fri, 26 Aug 2022 13:43:19 +0000
+Subject: [PATCH] SC598 External Clock support
+
+---
+ drivers/soc/adi/mach-sc5xx/gptimers.c | 6 ++++++
+ include/linux/soc/adi/cpu.h           | 1 +
+ 2 files changed, 7 insertions(+)
+ mode change 100644 => 100755 drivers/soc/adi/mach-sc5xx/gptimers.c
+ mode change 100644 => 100755 include/linux/soc/adi/cpu.h
+
+diff --git a/drivers/soc/adi/mach-sc5xx/gptimers.c b/drivers/soc/adi/mach-sc5xx/gptimers.c
+old mode 100644
+new mode 100755
+index 0ebb5bc25325..cd3faadab50a
+--- a/drivers/soc/adi/mach-sc5xx/gptimers.c
++++ b/drivers/soc/adi/mach-sc5xx/gptimers.c
+@@ -65,6 +65,12 @@ uint32_t get_gptimer_count(struct sc5xx_gptimer *timer)
+ }
+ EXPORT_SYMBOL(get_gptimer_count);
+ 
++uint16_t get_gptimer_run(void)
++{
++	return readw(&group_base->run);
++}
++EXPORT_SYMBOL(get_gptimer_run);
++
+ uint16_t get_gptimer_status(void)
+ {
+ 	return readw(&group_base->data_ilat);
+diff --git a/include/linux/soc/adi/cpu.h b/include/linux/soc/adi/cpu.h
+old mode 100644
+new mode 100755
+index 065318442bbb..1e0fcb3f22d8
+--- a/include/linux/soc/adi/cpu.h
++++ b/include/linux/soc/adi/cpu.h
+@@ -110,6 +110,7 @@ void     set_gptimer_config(struct sc5xx_gptimer *timer, uint16_t config);
+ void     enable_gptimers(uint16_t mask);
+ void     disable_gptimers(uint16_t mask);
+ void     map_gptimers(void);
++uint16_t get_gptimer_run(void);
+ uint16_t get_gptimer_status(void);
+ void     set_gptimer_status(uint16_t value);
+ void     set_spu_securep_msec(uint16_t n, bool msec);
+-- 
+2.17.1
+
