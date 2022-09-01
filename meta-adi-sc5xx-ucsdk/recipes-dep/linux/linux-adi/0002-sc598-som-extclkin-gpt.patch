@@ -1,19 +1,35 @@
-From 668645cc3a5e713f1a79e83662537120c6b7a140 Mon Sep 17 00:00:00 2001
-From: Harvin Almeida <harvin.almeida@analog.com>
-Date: Fri, 26 Aug 2022 13:43:19 +0000
-Subject: [PATCH] SC598 External Clock support
-
----
- drivers/soc/adi/mach-sc5xx/gptimers.c | 6 ++++++
- include/linux/soc/adi/cpu.h           | 1 +
- 2 files changed, 7 insertions(+)
- mode change 100644 => 100755 drivers/soc/adi/mach-sc5xx/gptimers.c
- mode change 100644 => 100755 include/linux/soc/adi/cpu.h
-
+diff --git a/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts b/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
+index abd954fb32b4..f0846778acfa 100644
+--- a/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
++++ b/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
+@@ -141,6 +141,13 @@
+ 	/* adi,average; */
+ };
+ 
++&gptimer3 {
++	/* enable PB_03 to work as TIMER0_TMR3 */
++	pinctrl-names = "default";
++	pinctrl-0 = <&extclkin_default>;
++	status = "okay";
++};
++
+ &uart0 {
+ 	/* enable-pin = <&ssw0 5 GPIO_ACTIVE_LOW>;	 UART0_EN */
+ 	/* hwflow-en-pin = <&ssw0 6 GPIO_ACTIVE_LOW>;  UART0_FLOW_EN */
+@@ -598,6 +605,11 @@
+ };
+ 
+ &pinctrl0 {
++	extclkin_default: extclkin_default_pins {
++		pins {
++			pinmux = <ADI_ADSP_PINMUX('B', 3, ADI_ADSP_PINFUNC_ALT0)>;
++		};
++	};
+ 	uart0_default: uart0_default_pins {
+ 		pins {
+ 			pinmux = <ADI_ADSP_PINMUX('A', 6, ADI_ADSP_PINFUNC_ALT1)>,
 diff --git a/drivers/soc/adi/mach-sc5xx/gptimers.c b/drivers/soc/adi/mach-sc5xx/gptimers.c
-old mode 100644
-new mode 100755
-index 0ebb5bc25325..cd3faadab50a
+index 0ebb5bc25325..cd3faadab50a 100644
 --- a/drivers/soc/adi/mach-sc5xx/gptimers.c
 +++ b/drivers/soc/adi/mach-sc5xx/gptimers.c
 @@ -65,6 +65,12 @@ uint32_t get_gptimer_count(struct sc5xx_gptimer *timer)
@@ -30,9 +46,7 @@ index 0ebb5bc25325..cd3faadab50a
  {
  	return readw(&group_base->data_ilat);
 diff --git a/include/linux/soc/adi/cpu.h b/include/linux/soc/adi/cpu.h
-old mode 100644
-new mode 100755
-index 065318442bbb..1e0fcb3f22d8
+index 065318442bbb..1e0fcb3f22d8 100644
 --- a/include/linux/soc/adi/cpu.h
 +++ b/include/linux/soc/adi/cpu.h
 @@ -110,6 +110,7 @@ void     set_gptimer_config(struct sc5xx_gptimer *timer, uint16_t config);
@@ -43,6 +57,3 @@ index 065318442bbb..1e0fcb3f22d8
  uint16_t get_gptimer_status(void);
  void     set_gptimer_status(uint16_t value);
  void     set_spu_securep_msec(uint16_t n, bool msec);
--- 
-2.17.1
-

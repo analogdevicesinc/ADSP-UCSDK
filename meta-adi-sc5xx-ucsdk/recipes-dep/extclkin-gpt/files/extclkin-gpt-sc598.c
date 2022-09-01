@@ -166,29 +166,7 @@ static inline void setup_gpt(void)
     u8 tmp;
 
 /* 
-done in <u-boot-adi>, _to_be_done_ in <Kernel>
-    //if( GPT_NO == 1)
-    if( GPT_NO == 3)
-    {
-        //enable Mux
-        //Setting up mux
-        regAdr = PORTB_MUX_REG_IO;
-        regVal = reg_read(regAdr);
-        regVal |= TMR3_MUX_ENABLE | TWI1_SCL_PORTB_MUX | TWI1_SDA_PORTB_MUX;
-        reg_write(regAdr, regVal);
-        PRINTK_DBG("\n write PORTC MUX Reg address : %x, Reg value : %x", regAdr, regVal);   
-
-        regAdr = PORTB_FER_REG_IO;
-        regVal = reg_read(regAdr);
-        regVal |= TMR3_FER_ENABLE | TWI1_SCL_PORTB_FER | TWI1_SDA_PORTB_FER;
-        reg_write(regAdr, regVal);
-        PRINTK_DBG("\n write PORTC FER Reg address : %x, Reg value : %x", regAdr, regVal);
-    }
-	else
-	{
-		pr_err("Unsupported timer channel %d", GPT_NO);
-		return;
-	}
+PB_03 set in sc598-som-ezkit.dts 
 */
 
     //Confirming the whether timer is running or not
