@@ -19,6 +19,9 @@ IMAGE_INSTALL_append_adsp-sc594-som-ezkit = " jq "
 
 # Packages to add
 IMAGE_INSTALL_append = " \ 
+	libstdc++ \
+	tar \
+	bash \
     nano \
     ethtool \
     gdbserver \ 
