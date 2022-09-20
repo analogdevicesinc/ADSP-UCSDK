@@ -1,0 +1,28 @@
+diff --git a/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts b/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
+index 8853e37e4343..b248abbeee65 100644
+--- a/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
++++ b/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
+@@ -291,7 +291,9 @@
+ };
+ 
+ &i2c1 {
+-	status = "disabled";
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c1_pins>;
+ };
+ 
+ &i2c2 {
+@@ -661,6 +663,12 @@
+ 			         <ADI_ADSP_PINMUX('D', 4, ADI_ADSP_PINFUNC_ALT2)>;
+ 		};
+ 	};
++	i2c1_pins: i2c1_default_pins {
++		pins {
++			pinmux = <ADI_ADSP_PINMUX('B', 0, ADI_ADSP_PINFUNC_ALT1)>,
++			         <ADI_ADSP_PINMUX('B', 1, ADI_ADSP_PINFUNC_ALT1)>;
++		};
++	};
+ 	i2c2_pins: i2c2_default_pins {
+ 		pins {
+ 			pinmux = <ADI_ADSP_PINMUX('A', 14, ADI_ADSP_PINFUNC_ALT0)>,
