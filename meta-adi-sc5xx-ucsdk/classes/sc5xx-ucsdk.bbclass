@@ -14,8 +14,14 @@ IMAGE_INSTALL_append_adsp-sc598-som-ezkit = " \
     e2fsprogs-mke2fs \
 "
 
+#Add JSON reader for SC594
+IMAGE_INSTALL_append_adsp-sc594-som-ezkit = " jq "
+
 # Packages to add
 IMAGE_INSTALL_append = " \ 
+	libstdc++ \
+	tar \
+	bash \
     nano \
     ethtool \
     gdbserver \ 
