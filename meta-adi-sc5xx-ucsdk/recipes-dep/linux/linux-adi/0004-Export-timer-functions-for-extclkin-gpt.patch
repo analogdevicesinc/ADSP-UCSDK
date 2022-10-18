@@ -1,0 +1,59 @@
+From 8c460500c6c7942479134c0aa8ddabc22470f769 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Tue, 18 Oct 2022 12:43:11 -0500
+Subject: [PATCH] Export timer functions for extclkin-gpt
+
+---
+ drivers/clocksource/timer-adi-adsp-sc5xx.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/clocksource/timer-adi-adsp-sc5xx.c b/drivers/clocksource/timer-adi-adsp-sc5xx.c
+index df17ec2f5559..0a4dc4e22cc8 100644
+--- a/drivers/clocksource/timer-adi-adsp-sc5xx.c
++++ b/drivers/clocksource/timer-adi-adsp-sc5xx.c
+@@ -126,6 +126,7 @@ static struct clockevent_gptimer *to_clockevent_gptimer(struct clock_event_devic
+ static void set_gptimer_period(struct sc5xx_gptimer *timer, uint32_t period) {
+ 	writel(period, timer->io_base + GPTIMER_PER_OFF);
+ }
++EXPORT_SYMBOL(set_gptimer_period);
+ 
+ static void set_gptimer_pwidth(struct sc5xx_gptimer *timer, uint32_t value) {
+ 	writel(value, timer->io_base + GPTIMER_WID_OFF);
+@@ -138,10 +139,12 @@ static void set_gptimer_delay(struct sc5xx_gptimer *timer, uint32_t value) {
+ static void set_gptimer_config(struct sc5xx_gptimer *timer, uint16_t config) {
+ 	writew(config, timer->io_base + GPTIMER_CFG_OFF);
+ }
++EXPORT_SYMBOL(set_gptimer_config);
+ 
+ static uint32_t get_gptimer_count(struct sc5xx_gptimer *timer) {
+ 	return readl(timer->io_base + GPTIMER_CNT_OFF);
+ }
++EXPORT_SYMBOL(get_gptimer_count);
+ 
+ /**
+  * Accessors that redirect to the shared registers
+@@ -149,11 +152,13 @@ static uint32_t get_gptimer_count(struct sc5xx_gptimer *timer) {
+ static void gptimer_enable(struct sc5xx_gptimer *timer) {
+ 	writew(1 << timer->id, gptimer_controller.base + GPTIMER_RUN_SET);
+ }
++EXPORT_SYMBOL(gptimer_enable);
+ 
+ static void gptimer_disable(struct sc5xx_gptimer *timer) {
+ 	writew(1 << timer->id, gptimer_controller.base + GPTIMER_STOP_CFG_SET);
+ 	writew(1 << timer->id, gptimer_controller.base + GPTIMER_RUN_CLR);
+ }
++EXPORT_SYMBOL(gptimer_disable);
+ 
+ static void gptimer_clear_interrupt(struct sc5xx_gptimer *timer) {
+ 	writew(1 << timer->id, gptimer_controller.base + GPTIMER_DATA_ILAT);
+@@ -164,6 +169,7 @@ static bool gptimer_is_running(struct sc5xx_gptimer *timer) {
+ 	u32 check = 1 << timer->id;
+ 	return (stat & check) == check;
+ }
++EXPORT_SYMBOL(gptimer_is_running);
+ 
+ /**
+  * Scheduler/clocksource functions
+-- 
+2.17.1
+

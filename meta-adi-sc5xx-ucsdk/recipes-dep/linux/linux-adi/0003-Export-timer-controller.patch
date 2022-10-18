@@ -1,0 +1,24 @@
+From 62faa32898131c55053d2f057cb8e389f4b10118 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Tue, 18 Oct 2022 10:51:45 -0500
+Subject: [PATCH] Export timer controller
+
+---
+ drivers/clocksource/timer-adi-adsp-sc5xx.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/clocksource/timer-adi-adsp-sc5xx.c b/drivers/clocksource/timer-adi-adsp-sc5xx.c
+index b0247ec9490d..df17ec2f5559 100644
+--- a/drivers/clocksource/timer-adi-adsp-sc5xx.c
++++ b/drivers/clocksource/timer-adi-adsp-sc5xx.c
+@@ -113,6 +113,7 @@ struct sc5xx_gptimer_controller {
+ };
+ 
+ static struct sc5xx_gptimer_controller gptimer_controller = {0};
++EXPORT_SYMBOL(gptimer_controller);
+ 
+ static struct clockevent_gptimer *to_clockevent_gptimer(struct clock_event_device *evt)
+ {
+-- 
+2.17.1
+

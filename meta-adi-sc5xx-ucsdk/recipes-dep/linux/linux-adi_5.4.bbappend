@@ -25,8 +25,10 @@ SRC_URI_append_adsp-sc594-som-ezkit = "\
 #"
 
 SRC_URI_append_adsp-sc598-som-ezkit = "\
-            file://0001-SC598-External-clock-support-v2_1_0.patch \
+            file://0001-SC598-add-external-clock-to-dts.patch \
 	        file://0002-sc598-extclkin-i2c1.patch \
+            file://0003-Export-timer-controller.patch \
+            file://0004-Export-timer-functions-for-extclkin-gpt.patch \
 "
 
 COMPATIBLE_MACHINE = "(adsp-sc573-ezkit|adsp-sc584-ezkit|adsp-sc589-ezkit|adsp-sc589-mini|adsp-sc594-som-ezkit|adsp-sc598-som-ezkit)"

@@ -1,0 +1,42 @@
+From f2487039b083f659d20968205239c16a1177c9f5 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Tue, 18 Oct 2022 10:36:09 -0500
+Subject: [PATCH] SC598 add external clock to dts
+
+---
+ arch/arm64/boot/dts/adi/sc598-som-ezkit.dts | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts b/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
+index a7d58033c7ae..55787417c540 100644
+--- a/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
++++ b/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
+@@ -133,6 +133,13 @@
+ 	/* adi,average; */
+ };
+ 
++&gptimer3 {
++	/* enable PB_03 to work as TIMER0_TMR3 */
++	pinctrl-names = "default";
++	pinctrl-0 = <&extclkin_default>;
++	status = "okay";
++};
++
+ &uart0 {
+ 	/* enable-pin = <&ssw0 5 GPIO_ACTIVE_LOW>;	 UART0_EN */
+ 	/* hwflow-en-pin = <&ssw0 6 GPIO_ACTIVE_LOW>;  UART0_FLOW_EN */
+@@ -600,6 +607,11 @@
+ };
+ 
+ &pinctrl0 {
++	extclkin_default: extclkin_default_pins {
++		pins {
++			pinmux = <ADI_ADSP_PINMUX('B', 3, ADI_ADSP_PINFUNC_ALT0)>;
++		};
++	};
+ 	uart0_default: uart0_default_pins {
+ 		pins {
+ 			pinmux = <ADI_ADSP_PINMUX('A', 6, ADI_ADSP_PINFUNC_ALT1)>,
+-- 
+2.17.1
+

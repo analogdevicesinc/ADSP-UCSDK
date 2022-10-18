@@ -5,7 +5,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=12f884d2ae1ff87c09e5b7ccc2c4ca7e"
 inherit module
 
 SRC_URI = " file://Makefile \
-           file://COPYING \
+            file://COPYING \
+            file://gptimer-interface.h \
           "
 
 SRC_URI_append_adsp-sc594-som-ezkit = " file://extclkin-gpt-sc594.c "

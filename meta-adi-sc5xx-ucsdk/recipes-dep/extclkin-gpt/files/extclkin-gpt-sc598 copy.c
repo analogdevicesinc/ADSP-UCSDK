@@ -26,10 +26,9 @@
 #include <linux/preempt.h>
 #include <linux/uaccess.h>
 
-//#include <linux/soc/adi/cpu.h>
+#include <linux/soc/adi/cpu.h>
 #include <linux/soc/adi/sc59x.h>
 
-#include "gptimer-interface.h"
 
 #define ROLLOVER_DETECTION_BY_IRPT_LATCH   (0)
 #define PRINTK_DBG(...)  printk(__VA_ARGS__)  
@@ -59,6 +58,7 @@
 #define GPT_MASK               (1<<GPT_NO)
 #define SUCCESS                0
 #define READ_BUFFER_SIZE       (MAX_LINE_LENGTH + 1)    
+
 
 /* =========================
         TIMER0
@@ -170,16 +170,16 @@ PB_03 set in sc598-som-ezkit.dts
 */
 
     //Confirming the whether timer is running or not
-    regVal = gptimer_is_running(sc598_gpt);	
+    regVal = get_gptimer_run();	
     PRINTK_DBG("\n Timer Run read  %d ", regVal);	
-    if(regVal)
+    if(regVal & GPT_MASK)
     {
         PRINTK_DBG("\n Timer %d is running", GPT_NO);
         PRINTK_DBG("\n Timer value :  %d ", get_count(&tmp));
 
         // Timer Run Clear
         regVal = (GPT_MASK);
-	    gptimer_disable(sc598_gpt);
+	disable_gptimers(regVal);
 
         PRINTK_DBG("\n write GPT Run clear Reg value : %x", regVal);
     }
@@ -205,23 +205,15 @@ PB_03 set in sc598-som-ezkit.dts
 
     // Timer Run SET
     regVal = (GPT_MASK);
-    u16 imsk;
-    dev_info(extclkin_gpt.thisDev,"gptimer_controller.base : %x",gptimer_controller.base);
-    imsk = readw(gptimer_controller.base + GPTIMER_DATA_IMSK);
-    dev_info(extclkin_gpt.thisDev,"imsk read : %x",imsk);
-    imsk &= ~(1 << sc598_gpt->id);
-    dev_info(extclkin_gpt.thisDev,"imsk write : %x",imsk);
-    writew(imsk, gptimer_controller.base + GPTIMER_DATA_IMSK);
-    gptimer_enable(sc598_gpt);
-    
+    enable_gptimers(regVal);
 
     PRINTK_DBG("\n write GPT Run set Reg value : %x", regVal);
 
     //Confirming the whether timer is running or not
-    regVal = gptimer_is_running(sc598_gpt);	
-    if(regVal)
+    regVal = get_gptimer_run();	
+    if(regVal & GPT_MASK)
     {
-        PRINTK_DBG("\n Timer %d is running", sc598_gpt->id);
+        PRINTK_DBG("\n Timer %d is running", GPT_NO);
         PRINTK_DBG("\n Current Timer value :  %d ", get_count(&tmp));
         PRINTK_DBG("\n Counter set up success");
     }
@@ -235,7 +227,7 @@ static inline void stop_gpt(void)
 {
     u32 regVal = (GPT_MASK);
     // Timer Clear
-    gptimer_disable(sc598_gpt);
+    disable_gptimers(regVal);
 
     //Clear CFG
     regVal = 0;
@@ -254,7 +246,6 @@ static inline u32 get_count(u8 *rollover)
     u32 status;
     // Get count from timer
     count = get_gptimer_count(sc598_gpt);
-    dev_info(extclkin_gpt.thisDev,"count : %llu",count);
     
 #if ROLLOVER_DETECTION_BY_IRPT_LATCH  
     // Check rollover
@@ -313,9 +304,6 @@ static int __init gpt_clkin_init(void)
     dev_dbg(extclkin_gpt.thisDev, "Driver %s got major number %d. Create a dev file with 'mknod /dev/%s c %d 0'.\n", DEVICE_NAME, extclkin_gpt.deviceMajor, DEVICE_NAME, extclkin_gpt.deviceMajor);
 
     sc598_gpt = gptimer_request(GPT_NO);
-    dev_info(extclkin_gpt.thisDev," HBD id : %d",sc598_gpt->id);
-    dev_info(extclkin_gpt.thisDev," HBD irq : %d",sc598_gpt->irq);
-    dev_info(extclkin_gpt.thisDev," HBD iomem : %x",sc598_gpt->io_base);
 
     if (!sc598_gpt->io_base) {
         dev_err(extclkin_gpt.thisDev, "Can't ioremap memory for GPT\n");
