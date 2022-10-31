@@ -27,6 +27,7 @@ IMAGE_INSTALL_append = " \
     ethtool \
     gdbserver \ 
 	sram-mmap-test \
+	cgroupfs-mount \
 "
 
 #Packages to remove
