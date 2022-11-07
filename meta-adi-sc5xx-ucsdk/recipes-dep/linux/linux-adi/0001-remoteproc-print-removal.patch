@@ -1,0 +1,24 @@
+From bccc7658f3805ea35e1750a027c0bb84f46688c6 Mon Sep 17 00:00:00 2001
+From: gshekhar-ADI <gaurav.shekhar@analog.com>
+Date: Wed, 12 Oct 2022 17:08:13 +0530
+Subject: [PATCH] remoteproc print removal
+
+---
+ drivers/remoteproc/adi_remoteproc.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/remoteproc/adi_remoteproc.c b/drivers/remoteproc/adi_remoteproc.c
+index 3a052f7b789b..3f4852ac35d0 100644
+--- a/drivers/remoteproc/adi_remoteproc.c
++++ b/drivers/remoteproc/adi_remoteproc.c
+@@ -652,6 +652,7 @@ static void adi_rproc_kick(struct rproc *rproc, int vqid)
+ 
+ 	while(rproc_data->wait_platform_init){
+ 		ret = wait_for_completion_interruptible_timeout(&rproc_data->sharc_platform_init_complete, CORE_INIT_TIMEOUT);
++		ret = 1;
+ 		if(ret > 0){
+ 			rproc_data->wait_platform_init = 0;
+ 		}else if(ret < 0){
+-- 
+2.25.1
+

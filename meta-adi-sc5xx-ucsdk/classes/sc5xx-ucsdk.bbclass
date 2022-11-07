@@ -2,6 +2,7 @@
 IMAGE_INSTALL_append_adsp-sc573-ezkit = " extclkin-gpt "
 IMAGE_INSTALL_append_adsp-sc589-ezkit = " extclkin-gpt "
 IMAGE_INSTALL_append_adsp-sc584-ezkit = " extclkin-gpt "
+IMAGE_INSTALL_append_adsp-sc594-som-ezkit = " extclkin-gpt "
 IMAGE_INSTALL_append_adsp-sc598-som-ezkit = " extclkin-gpt "
 
 #SC598 eMMC as disk
@@ -26,6 +27,7 @@ IMAGE_INSTALL_append = " \
     ethtool \
     gdbserver \ 
 	sram-mmap-test \
+	cgroupfs-mount \
 "
 
 #Packages to remove
