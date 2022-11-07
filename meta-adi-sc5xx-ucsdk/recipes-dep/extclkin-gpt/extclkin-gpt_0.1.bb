@@ -6,11 +6,10 @@ inherit module
 
 SRC_URI = " file://Makefile \
             file://COPYING \
-            file://gptimer-interface.h \
           "
 
 SRC_URI_append_adsp-sc594-som-ezkit = " file://extclkin-gpt-sc594.c "
-SRC_URI_append_adsp-sc598-som-ezkit = " file://extclkin-gpt-sc598.c "
+SRC_URI_append_adsp-sc598-som-ezkit = " file://extclkin-gpt-sc5xx.c "
 SRC_URI_append_adsp-sc589-ezkit = " file://extclkin-gpt-sc58x.c "
 SRC_URI_append_adsp-sc584-ezkit = " file://extclkin-gpt-sc58x.c "
 SRC_URI_append_adsp-sc573-ezkit = " file://extclkin-gpt-sc57x.c "
