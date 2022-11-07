@@ -1,16 +1,5 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-# SRC_URI_append = "\
-#            file://sram.cfg \
-#            file://REMOTEPROC.cfg \
-#            file://0001-Expand-sram1-to-end-of-L2-memory.patch \
-#            file://0002-Added-IOCTL-to-read-last-used-physical-address.patch \
-#            file://0003-Expand-L2-space-for-SC58x.patch \
-#            file://0001-Enable-Sram-mmap-on-SC594_5_4.patch \
-#            file://0001-Update-physical-address-IOCTL-for-Kernel-5.2.patch \
-#            file://disable_soc_snd.cfg \
-#"
-
 SRC_URI_append = "\
             file://sram.cfg \
             file://REMOTEPROC.cfg \
@@ -18,8 +7,7 @@ SRC_URI_append = "\
 "
 
 SRC_URI_append_adsp-sc594-som-ezkit = "\
-            file://0001-SC594-Enable-Sram-mmap.patch \
-            file://0001-SC594-IOCTL-to-get-physical-address.patch \
+            file://0001-5_4_IOCTL-call-to-get-last-used-physical-address.patch \
 "
 SRC_URI_append_adsp-sc589-ezkit = "\
             file://0001-SC58x-Expand-L2-space.patch \
