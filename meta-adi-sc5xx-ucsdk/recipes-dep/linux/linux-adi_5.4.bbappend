@@ -15,16 +15,9 @@ SRC_URI_append_adsp-sc573-ezkit = "\
             file://0001-sc57x-hrtimer-support.patch \
 "
 SRC_URI_append_adsp-sc594-som-ezkit = "\
-            file://0001-sc59x-hrtimer-support_5_4.patch \
 			file://0001-Enable-I2C-1.patch \
-			file://0001-remoteproc-print-removal.patch \
+            file://0001-sc598-extclkin-gpt.patch \
 "
-#SRC_URI_append_adsp-sc598-som-ezkit = "\
-#            file://0001-SC598-External-Clock-support.patch \
-#	        file://0002-sc598-extclkin-i2c1.patch \
-#            file://0002-sc598-som-extclkin-gpt.patch \
-#"
-
 SRC_URI_append_adsp-sc598-som-ezkit = "\
             file://0001-sc598-extclkin-gpt.patch \
 "
