@@ -1,0 +1,76 @@
+From 8e070736d381cba3cde4ea439b31d074715f4138 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Tue, 21 Mar 2023 12:00:53 -0500
+Subject: [PATCH] Add USB boot option to uboot
+
+---
+ include/configs/sc_adi_common.h | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/include/configs/sc_adi_common.h b/include/configs/sc_adi_common.h
+index b0933598a0..81157e7e7f 100644
+--- a/include/configs/sc_adi_common.h
++++ b/include/configs/sc_adi_common.h
+@@ -137,9 +137,11 @@
+ 
+ #if !CONFIG_IS_ENABLED(FIT)
+ 	#define ADI_MMC_DTB "ext2load mmc 0:1 ${dtbaddr} /boot/${dtbfile};"
++	#define ADI_USB_DTB "ext2load usb 0:1 ${dtbaddr} /boot/${dtbfile};"
+ 	#define ADI_TFTP_DTB "tftp ${dtbaddr} ${dtbfile};"
+ #else
+ 	#define ADI_MMC_DTB ""
++	#define ADI_USB_DTB ""
+ 	#define ADI_TFTP_DTB ""
+ #endif
+ 
+@@ -151,6 +153,7 @@
+ 
+ #define ADI_BOOTARGS_ROOT_NAND "/dev/mtdblock2 rw"
+ #define ADI_BOOTARGS_ROOT_SDCARD    "/dev/mmcblk0p1 rw"
++#define ADI_BOOTARGS_ROOT_USB "/dev/sda1 rw"
+ 
+ #define ADI_BOOTARGS_SDCARD	\
+ 	"root=" ADI_BOOTARGS_ROOT_SDCARD " " \
+@@ -159,6 +162,15 @@
+ 	"console=ttySC" __stringify(CONFIG_UART_CONSOLE) "," \
+ 			__stringify(CONFIG_BAUDRATE) " "
+ 
++#define ADI_BOOTARGS_USB \
++	"root=" ADI_BOOTARGS_ROOT_USB " rootwait " \
++	"rootfstype=ext3 " \
++	"clkin_hz=" __stringify(CONFIG_CLKIN_HZ) " " \
++	ADI_BOOTARGS_VIDEO \
++	ADI_EARLYPRINTK \
++	"console=ttySC" __stringify(CONFIG_UART_CONSOLE) "," \
++			__stringify(CONFIG_BAUDRATE) " "
++
+ #define ADI_BOOTARGS_NFS	\
+ 	"root=/dev/nfs rw " \
+ 	"nfsroot=${serverip}:${rootpath},tcp,nfsvers=3 " \
+@@ -220,6 +232,7 @@
+ 	"dtbfile=" CONFIG_DTBNAME "\0" \
+ 	"dtbaddr=" CONFIG_DTBLOADADDR "\0" \
+ 	"sdcardargs=setenv bootargs " ADI_BOOTARGS_SDCARD "\0" \
++	"usbargs=setenv bootargs " ADI_BOOTARGS_USB "\0" \
+ 	"ramargs=setenv bootargs " CONFIG_BOOTARGS "\0" \
+ 	"nfsargs=setenv bootargs " ADI_BOOTARGS_NFS "\0" \
+ 	"ramboot_emmc=" \
+@@ -259,6 +272,15 @@
+ 		ADI_BOOT \
+ 		"\0" \
+ 	\
++	"usbboot=" \
++		"usb start;" \
++		"ext2load usb 0:1 ${loadaddr} /boot/${ramfile};" \
++		ADI_USB_DTB \
++		"run usbargs;" \
++		"run addip;" \
++		ADI_BOOT \
++		"\0" \
++	\
+ 	"nfsfile=" IMAGEFILE "\0" \
+ 	"nfsboot=" \
+ 		"tftp ${loadaddr} ${nfsfile};" \
+-- 
+2.25.1
+

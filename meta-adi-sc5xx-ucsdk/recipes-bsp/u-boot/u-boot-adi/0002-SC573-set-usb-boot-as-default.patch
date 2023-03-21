@@ -1,22 +1,25 @@
-From 3d3a810d24c51f1712b619a7991f20e4e5dd7fed Mon Sep 17 00:00:00 2001
+From 0e6296dc096b778dee750184b81bf249e4c962b9 Mon Sep 17 00:00:00 2001
 From: Harvin Almeida <harvin.almeida@analog.com>
-Date: Tue, 2 Mar 2021 20:17:44 +0000
-Subject: [PATCH] Set usbboot as deafult on sc573-ezkit
+Date: Tue, 21 Mar 2023 12:07:06 -0500
+Subject: [PATCH] SC573 set usb boot as default
 
 ---
  include/configs/sc573-ezkit.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/configs/sc573-ezkit.h b/include/configs/sc573-ezkit.h
-index 13e6a9d..ac6ff1d 100644
+index 49b7265f0a..9e5e244eb9 100644
 --- a/include/configs/sc573-ezkit.h
 +++ b/include/configs/sc573-ezkit.h
-@@ -167,7 +167,7 @@
- #define CONFIG_DWMMC
- #define CONFIG_BOUNCE_BUFFER
+@@ -132,7 +132,7 @@
+ //#define CONFIG_MMC_DW
+ //#define CONFIG_BOUNCE_BUFFER
  
 -#define CONFIG_BOOTCOMMAND	"run ramboot"
 +#define CONFIG_BOOTCOMMAND	"run usbboot"
  #define INITRAMADDR "0x85000000"
  
  #include <configs/sc_adi_common.h>
+-- 
+2.25.1
+
