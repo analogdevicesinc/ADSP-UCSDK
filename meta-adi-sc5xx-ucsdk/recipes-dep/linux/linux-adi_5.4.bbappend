@@ -11,9 +11,6 @@ SRC_URI_append_adsp-sc584-ezkit = "\
             file://0005-sc58x-hrtimer-support.patch \
             file://0001-Changing-core-timer-from-0-1-to-2-3.patch \
 "
-SRC_URI_append_adsp-sc573-ezkit = "\
-            file://0001-sc57x-hrtimer-support.patch \
-"
 SRC_URI_append_adsp-sc594-som-ezkit = "\
 			file://0001-Enable-I2C-1.patch \
             file://0001-sc598-extclkin-gpt.patch \

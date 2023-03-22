@@ -1,4 +1,4 @@
-From 3043a452034336ca65b3d05c9727651b5a0b400e Mon Sep 17 00:00:00 2001
+From 7796e0afe7014f8e7c01fb1eef6f36e2b9915b09 Mon Sep 17 00:00:00 2001
 From: Harvin Almeida <harvin.almeida@analog.com>
 Date: Tue, 15 Sep 2020 14:14:00 +0000
 Subject: [PATCH] Expand sram1 to end of L2 memory
@@ -8,10 +8,10 @@ Subject: [PATCH] Expand sram1 to end of L2 memory
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm/boot/dts/sc57x.dtsi b/arch/arm/boot/dts/sc57x.dtsi
-index 1e497d9e9997..d1e78ba086f8 100644
+index 03a9fee50b22..7241227b7d13 100644
 --- a/arch/arm/boot/dts/sc57x.dtsi
 +++ b/arch/arm/boot/dts/sc57x.dtsi
-@@ -86,8 +86,8 @@
+@@ -90,8 +90,8 @@
  		compatible = "mmio-sram";
  		#address-cells = <1>;
  		#size-cells = <1>;
@@ -21,4 +21,7 @@ index 1e497d9e9997..d1e78ba086f8 100644
 +		ranges = <0 0x20004000 0xFBFFF>;
  	};
  
- 	scb {
+ 	sys_clkin0: sys-clkin0@1 {
+-- 
+2.25.1
+
