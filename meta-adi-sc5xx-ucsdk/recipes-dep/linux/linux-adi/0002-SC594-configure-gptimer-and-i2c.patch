@@ -15,7 +15,7 @@ index af446dd0934a..fa1910bbefe2 100644
  	};
  };
  
-+&gptimer3 {
++&gptimer_counter {
 +	/* enable PB_03 to work as TIMER0_TMR3 */
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&extclkin_default>;

@@ -1,0 +1,28 @@
+From aa3f23097ebd6153e9989b06fee4f00e562915c3 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Wed, 29 Mar 2023 12:20:01 -0500
+Subject: [PATCH] Add gptimer counter to sc59x
+
+---
+ arch/arm/boot/dts/sc59x.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sc59x.dtsi b/arch/arm/boot/dts/sc59x.dtsi
+index 853e1c00dee0..a4bb8e3286f5 100644
+--- a/arch/arm/boot/dts/sc59x.dtsi
++++ b/arch/arm/boot/dts/sc59x.dtsi
+@@ -227,6 +227,11 @@
+ 			status = "disabled";
+ 		};
+ 
++		gptimer_counter: gptimer-counters@0 {
++			compatible = "adi,gptimer-counter";
++			status = "okay";
++		};
++
+ 		rcu: rcu@0x3108C000 {
+ 			compatible = "adi,reset-controller";
+ 			reg = <0x3108C000 0x1000>;
+-- 
+2.25.1
+
