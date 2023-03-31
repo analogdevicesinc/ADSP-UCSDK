@@ -14,6 +14,9 @@ SRC_URI_append_adsp-sc584-ezkit = "\
 SRC_URI_append_adsp-sc594-som-ezkit = "\
 			file://0001-Enable-I2C-1.patch \
             file://0001-sc598-extclkin-gpt.patch \
+            file://0001-sc598-firmware.patch \
+            file://0002-SC594-configure-gptimer-and-i2c.patch \
+            file://0004-Add-gptimer-counter-to-sc59x.patch \
 "
 SRC_URI_append_adsp-sc598-som-ezkit = "\
 	    file://0001-sc598-firmware.patch \

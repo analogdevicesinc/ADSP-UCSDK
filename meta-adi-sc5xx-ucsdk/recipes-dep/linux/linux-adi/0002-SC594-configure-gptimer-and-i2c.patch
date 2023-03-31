@@ -1,0 +1,64 @@
+From 991cc36ad2a0b1bbdd3faad9d6d97e8803cfdd41 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Fri, 24 Mar 2023 13:08:20 -0500
+Subject: [PATCH] SC594 configure gptimer and i2c
+
+---
+ arch/arm/boot/dts/sc594-som-ezkit.dts | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sc594-som-ezkit.dts b/arch/arm/boot/dts/sc594-som-ezkit.dts
+index af446dd0934a..fa1910bbefe2 100644
+--- a/arch/arm/boot/dts/sc594-som-ezkit.dts
++++ b/arch/arm/boot/dts/sc594-som-ezkit.dts
+@@ -162,6 +162,13 @@
+ 	};
+ };
+ 
++&gptimer_counter {
++	/* enable PB_03 to work as TIMER0_TMR3 */
++	pinctrl-names = "default";
++	pinctrl-0 = <&extclkin_default>;
++	status = "okay";
++};
++
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_default>;
+@@ -335,6 +342,8 @@
+ 
+ &i2c1 {
+ 	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c1_pins>;
+ };
+ 
+ &i2c2 {
+@@ -695,6 +704,11 @@
+ };
+ 
+ &pinctrl0 {
++	extclkin_default: extclkin_default_pins {
++		pins {
++			pinmux = <ADI_ADSP_PINMUX('B', 3, ADI_ADSP_PINFUNC_ALT0)>;
++		};
++	};
+ 	uart0_default: uart0_default_pins {
+ 		pins {
+ 			pinmux = <ADI_ADSP_PINMUX('A', 6, ADI_ADSP_PINFUNC_ALT1)>,
+@@ -747,6 +761,12 @@
+ 			         <ADI_ADSP_PINMUX('D', 4, ADI_ADSP_PINFUNC_ALT2)>;
+ 		};
+ 	};
++	i2c1_pins: i2c1_default_pins {
++		pins {
++			pinmux = <ADI_ADSP_PINMUX('B', 0, ADI_ADSP_PINFUNC_ALT1)>,
++			         <ADI_ADSP_PINMUX('B', 1, ADI_ADSP_PINFUNC_ALT1)>;
++		};
++	};
+ 	i2c2_pins: i2c2_default_pins {
+ 		pins {
+ 			pinmux = <ADI_ADSP_PINMUX('A', 14, ADI_ADSP_PINFUNC_ALT0)>,
+-- 
+2.25.1
+
