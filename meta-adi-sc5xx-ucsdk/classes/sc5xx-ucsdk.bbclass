@@ -1,12 +1,12 @@
 # Clock module for SC573, SC589 & SC584
-IMAGE_INSTALL_append_adsp-sc573-ezkit = " extclkin-gpt "
-IMAGE_INSTALL_append_adsp-sc589-ezkit = " extclkin-gpt "
-IMAGE_INSTALL_append_adsp-sc584-ezkit = " extclkin-gpt "
-IMAGE_INSTALL_append_adsp-sc594-som-ezkit = " extclkin-gpt "
-IMAGE_INSTALL_append_adsp-sc598-som-ezkit = " extclkin-gpt "
+IMAGE_INSTALL:append:adsp-sc573-ezkit = " extclkin-gpt "
+IMAGE_INSTALL:append:adsp-sc589-ezkit = " extclkin-gpt "
+IMAGE_INSTALL:append:adsp-sc584-ezkit = " extclkin-gpt "
+IMAGE_INSTALL:append:adsp-sc594-som-ezkit = " extclkin-gpt "
+IMAGE_INSTALL:append:adsp-sc598-som-ezkit = " extclkin-gpt "
 
 #SC598 eMMC as disk
-IMAGE_INSTALL_append_adsp-sc598-som-ezkit = " \
+IMAGE_INSTALL:append:adsp-sc598-som-ezkit = " \
     e2fsprogs-resize2fs \
     gzip \
     adi-flash-emmc \
@@ -16,10 +16,10 @@ IMAGE_INSTALL_append_adsp-sc598-som-ezkit = " \
 "
 
 #Add JSON reader for SC594
-IMAGE_INSTALL_append_adsp-sc594-som-ezkit = " jq "
+IMAGE_INSTALL:append:adsp-sc594-som-ezkit = " jq "
 
 # Packages to add
-IMAGE_INSTALL_append = " \ 
+IMAGE_INSTALL:append = " \ 
 	libstdc++ \
 	tar \
 	bash \
@@ -31,7 +31,7 @@ IMAGE_INSTALL_append = " \
 "
 
 #Packages to remove
-IMAGE_INSTALL_remove = " \
+IMAGE_INSTALL:remove = " \
 	pound \
 	dbus \
 	bluez5 \

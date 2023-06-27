@@ -1,0 +1,25 @@
+From c6f9ce8bcc00f28b44a5b3a6661182c5d1b8cf33 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Tue, 27 Jun 2023 14:02:51 -0500
+Subject: [PATCH] 5_15 Diable remoteproc autoboot
+
+---
+ drivers/remoteproc/remoteproc_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index 775df165eb45..8e78468df2ba 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -2519,7 +2519,7 @@ struct rproc *rproc_alloc(struct device *dev, const char *name,
+ 		return NULL;
+ 
+ 	rproc->priv = &rproc[1];
+-	rproc->auto_boot = true;
++	rproc->auto_boot = false;
+ 	rproc->elf_class = ELFCLASSNONE;
+ 	rproc->elf_machine = EM_NONE;
+ 
+-- 
+2.25.1
+
