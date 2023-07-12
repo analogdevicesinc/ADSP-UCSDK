@@ -2,7 +2,7 @@ From aa3f23097ebd6153e9989b06fee4f00e562915c3 Mon Sep 17 00:00:00 2001
 From: Harvin Almeida <harvin.almeida@analog.com>
 Date: Wed, 29 Mar 2023 12:20:01 -0500
 Subject: [PATCH] Add gptimer counter to sc59x
-
+HBD: Not needed for ADI 3.0.0
 ---
  arch/arm/boot/dts/sc59x.dtsi | 5 +++++
  1 file changed, 5 insertions(+)

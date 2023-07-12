@@ -1,6 +1,6 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-SRC_URI_append_adsp-sc573-ezkit = "\
+SRC_URI:append:adsp-sc573-ezkit = "\
     file://0002-SC573-set-usb-boot-as-default.patch \
     file://0001-Add-USB-boot-option-to-uboot.patch \
 "

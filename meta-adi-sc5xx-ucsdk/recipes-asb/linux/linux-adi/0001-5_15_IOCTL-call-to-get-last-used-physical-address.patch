@@ -1,0 +1,67 @@
+From c56342f324bb65b31f96012249f29875204a4065 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Tue, 27 Jun 2023 12:55:01 -0500
+Subject: [PATCH] 5_15_IOCTL call to get last used physical address
+
+---
+ drivers/misc/adi/sram_mmap.c | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/misc/adi/sram_mmap.c b/drivers/misc/adi/sram_mmap.c
+index 3699fb11b8c3..5c2d878b2b34 100644
+--- a/drivers/misc/adi/sram_mmap.c
++++ b/drivers/misc/adi/sram_mmap.c
+@@ -21,8 +21,12 @@
+ #include <linux/genalloc.h>
+ #include <linux/miscdevice.h>
+ #include <linux/platform_device.h>
++#include <linux/ioctl.h>
+ 
+ #define SRAM_MMAP_DRV_NAME		"sram_mmap"
++#define PHYSADDR _IOR(0x6B,0x01,unsigned long)
++
++unsigned long paddr = 0;
+ 
+ struct adi_sram_mmap {
+ 	struct miscdevice miscdev;
+@@ -66,7 +70,6 @@ static int sram_mmap(struct file *fp, struct vm_area_struct *vma)
+ 				struct adi_sram_mmap, miscdev);
+ 	struct mmap_private_data *pdata;
+ 	size_t sram_size = vma->vm_end - vma->vm_start;
+-	unsigned long paddr;
+ 	int ret = 0;
+ 
+ 	/*  Allocate private pdata */
+@@ -107,8 +110,29 @@ static int sram_mmap(struct file *fp, struct vm_area_struct *vma)
+ 	return ret;
+ }
+ 
++static long sram_ioctl(struct file *file,unsigned int cmd, unsigned long arg)
++{
++	int err=0;
++
++	if(_IOC_DIR(cmd) & _IOC_READ)
++		err = !access_ok((void __user *)arg, _IOC_SIZE(cmd));
++
++	switch (cmd)
++	{
++	case PHYSADDR:
++		put_user(paddr,(unsigned long __user *)arg);
++		break;
++
++	default:
++		break;
++	}
++
++	return err;
++}
++
+ static const struct file_operations sram_fops = {
+ 	.mmap		= sram_mmap,
++	.unlocked_ioctl = sram_ioctl,
+ };
+ 
+ static const struct of_device_id adi_sram_mmap_of_match[] = {
+-- 
+2.25.1
+
