@@ -1,0 +1,66 @@
+From 196019f8f7afb5ee502adff04dc51387a50251c6 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Wed, 12 Jul 2023 14:02:58 -0500
+Subject: [PATCH] SC598 5_15 configure gptimer and i2c for extclkin-gpt
+
+---
+ arch/arm64/boot/dts/adi/sc598-som.dtsi | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/adi/sc598-som.dtsi b/arch/arm64/boot/dts/adi/sc598-som.dtsi
+index 4dfa8db3efce..b8ca50620162 100644
+--- a/arch/arm64/boot/dts/adi/sc598-som.dtsi
++++ b/arch/arm64/boot/dts/adi/sc598-som.dtsi
+@@ -116,6 +116,13 @@ &thermal {
+ 	/* adi,average; */
+ };
+ 
++&gptimer_counter {
++	/* enable PB_03 to work as TIMER0_TMR3 */
++	pinctrl-names = "default";
++	pinctrl-0 = <&extclkin_default>;
++	status = "okay";
++};
++
+ &uart0 {
+ 	/* enable-pin = <&ssw0 5 GPIO_ACTIVE_LOW>;	 UART0_EN */
+ 	/* hwflow-en-pin = <&ssw0 6 GPIO_ACTIVE_LOW>;  UART0_FLOW_EN */
+@@ -211,7 +218,9 @@ &i2c0 {
+ };
+ 
+ &i2c1 {
+-	status = "disabled";
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c1_pins>;
+ };
+ 
+ &i2c2 {
+@@ -326,6 +335,11 @@ &sram_mmap {
+ };
+ 
+ &pinctrl0 {
++	extclkin_default: extclkin_default_pins {
++		pins {
++			pinmux = <ADI_ADSP_PINMUX('B', 3, ADI_ADSP_PINFUNC_ALT0)>;
++		};
++	};
+ 	uart0_default: uart0_default_pins {
+ 		pins {
+ 			pinmux = <ADI_ADSP_PINMUX('A', 6, ADI_ADSP_PINFUNC_ALT1)>,
+@@ -385,6 +399,12 @@ pins {
+ 			         <ADI_ADSP_PINMUX('D', 4, ADI_ADSP_PINFUNC_ALT2)>;
+ 		};
+ 	};
++	i2c1_pins: i2c1_default_pins {
++		pins {
++			pinmux = <ADI_ADSP_PINMUX('B', 0, ADI_ADSP_PINFUNC_ALT1)>,
++			         <ADI_ADSP_PINMUX('B', 1, ADI_ADSP_PINFUNC_ALT1)>;
++		};
++	};
+ 	i2c2_pins: i2c2_default_pins {
+ 		pins {
+ 			pinmux = <ADI_ADSP_PINMUX('A', 14, ADI_ADSP_PINFUNC_ALT0)>,
+-- 
+2.25.1
+
