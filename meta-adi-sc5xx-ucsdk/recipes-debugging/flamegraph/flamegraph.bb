@@ -7,7 +7,7 @@ S = "${WORKDIR}/git"
 SRC_URI = "git://github.com/brendangregg/FlameGraph.git;protocol=https;branch=master"
 SRCREV="d9fcc272b6a08c3e3e5b7919040f0ab5f8952d65"
 
-RDEPENDS:flamegraph = "perl"
+RDEPENDS:flamegraph = " perl perl-module-getopt-long perl-module-open "
 
 FILES:${PN} += "flamegraph/"
 do_install() {
