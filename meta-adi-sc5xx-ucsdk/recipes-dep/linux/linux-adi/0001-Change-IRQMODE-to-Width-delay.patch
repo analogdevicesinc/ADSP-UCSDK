@@ -1,0 +1,25 @@
+From 4c6a7f344a05d581ee204113a69639c143a1c2f2 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Thu, 29 Jun 2023 10:55:59 -0500
+Subject: [PATCH] Change IRQMODE to Width delay
+
+---
+ drivers/clocksource/timer-adi-adsp-sc5xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/clocksource/timer-adi-adsp-sc5xx.c b/drivers/clocksource/timer-adi-adsp-sc5xx.c
+index ec19e6a6d008..3d3feb50c680 100644
+--- a/drivers/clocksource/timer-adi-adsp-sc5xx.c
++++ b/drivers/clocksource/timer-adi-adsp-sc5xx.c
+@@ -244,7 +244,7 @@ static int gptimer_set_state_oneshot(struct clock_event_device *evt)
+ 
+ 	gptimer_disable(cevt->timer);
+ 	set_gptimer_config(cevt->timer, TIMER_OUT_DIS | TIMER_MODE_PWM |
+-		TIMER_PULSE_HI | TIMER_IRQ_DLY);
++		TIMER_PULSE_HI | TIMER_IRQ_WID_DLY);
+ 
+ 	/* gptimer_set_next_event will configure the period and delay */
+ 	return 0;
+-- 
+2.25.1
+

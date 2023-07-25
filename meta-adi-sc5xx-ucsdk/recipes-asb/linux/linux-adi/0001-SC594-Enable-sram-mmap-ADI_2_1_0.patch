@@ -1,0 +1,25 @@
+From c8e8444ea18e24346131454bfadad72ff9d8df8f Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Mon, 17 Apr 2023 11:29:04 -0500
+Subject: [PATCH] SC594 Enable sram mmap ADI_2_1_0
+Not required for ADI Yocto 3.0.0 SC594/SC58x/SC57x
+---
+ arch/arm/boot/dts/sc594-som-ezkit.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/sc594-som-ezkit.dts b/arch/arm/boot/dts/sc594-som-ezkit.dts
+index fa1910bbefe2..631e17682255 100644
+--- a/arch/arm/boot/dts/sc594-som-ezkit.dts
++++ b/arch/arm/boot/dts/sc594-som-ezkit.dts
+@@ -700,7 +700,7 @@
+ */
+ 
+ &sram_mmap {
+-	status = "disabled";
++	status = "okay";
+ };
+ 
+ &pinctrl0 {
+-- 
+2.25.1
+

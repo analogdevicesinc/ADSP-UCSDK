@@ -1,25 +1,24 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
-SRC_URI_append = "\ 
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+SRC_URI:append = "\ 
             file://dep-5_4.cfg \            
 "
 
-SRC_URI_append_adsp-sc589-ezkit = "\
+SRC_URI:append:adsp-sc589-ezkit = "\
             file://0005-sc58x-hrtimer-support.patch \
             file://0001-Changing-core-timer-from-0-1-to-2-3.patch \
 "
-SRC_URI_append_adsp-sc584-ezkit = "\
+SRC_URI:append:adsp-sc584-ezkit = "\
             file://0005-sc58x-hrtimer-support.patch \
             file://0001-Changing-core-timer-from-0-1-to-2-3.patch \
 "
-SRC_URI_append_adsp-sc573-ezkit = "\
-            file://0001-sc57x-hrtimer-support.patch \
-"
-SRC_URI_append_adsp-sc594-som-ezkit = "\
-            file://0001-sc59x-hrtimer-support_5_4.patch \
+SRC_URI:append:adsp-sc594-som-ezkit = "\
 			file://0001-Enable-I2C-1.patch \
-			file://0001-remoteproc-print-removal.patch \
+            file://0001-sc598-extclkin-gpt.patch \
+            file://0001-sc598-firmware.patch \
+            file://0002-SC594-configure-gptimer-and-i2c.patch \
+            file://0004-Add-gptimer-counter-to-sc59x.patch \
 "
-SRC_URI_append_adsp-sc598-som-ezkit = "\
+SRC_URI:append:adsp-sc598-som-ezkit = "\
 	    file://0001-sc598-firmware.patch \
 	    file://0002-sc598-extclkin-i2c1.patch \
 	    file://0001-sc598-extclkin-gpt.patch \
