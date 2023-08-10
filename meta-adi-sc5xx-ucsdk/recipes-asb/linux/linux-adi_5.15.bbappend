@@ -6,8 +6,12 @@ SRC_URI:append = "\
             file://disable_soc_snd.cfg \           
 "
 
-SRC_URI:append_adsp-sc594-som-ezkit = "\
+SRC_URI:append:adsp-sc594-som-ezkit = "\
             file://0001-5_15_IOCTL-call-to-get-last-used-physical-address.patch \
+"
+SRC_URI:append:adsp-sc598-som-ezkit = "\
+            file://0001-5_15_IOCTL-call-to-get-last-used-physical-address.patch \
+            file://0001-SC598-family-k5_15-move-L2-to-20104000.patch \
 "
 
 KERNEL_FEATURES:remove:adsp-sc573-ezkit = " ${WORKDIR}/feature/snd_ezkit.scc"
