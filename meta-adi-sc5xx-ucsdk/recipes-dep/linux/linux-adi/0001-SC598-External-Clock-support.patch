@@ -28,32 +28,3 @@ index abd954fb32b4..f0846778acfa 100644
  	uart0_default: uart0_default_pins {
  		pins {
  			pinmux = <ADI_ADSP_PINMUX('A', 6, ADI_ADSP_PINFUNC_ALT1)>,
-diff --git a/drivers/soc/adi/mach-sc5xx/gptimers.c b/drivers/soc/adi/mach-sc5xx/gptimers.c
-index 0ebb5bc25325..cd3faadab50a 100644
---- a/drivers/soc/adi/mach-sc5xx/gptimers.c
-+++ b/drivers/soc/adi/mach-sc5xx/gptimers.c
-@@ -65,6 +65,12 @@ uint32_t get_gptimer_count(struct sc5xx_gptimer *timer)
- }
- EXPORT_SYMBOL(get_gptimer_count);
- 
-+uint16_t get_gptimer_run(void)
-+{
-+	return readw(&group_base->run);
-+}
-+EXPORT_SYMBOL(get_gptimer_run);
-+
- uint16_t get_gptimer_status(void)
- {
- 	return readw(&group_base->data_ilat);
-diff --git a/include/linux/soc/adi/cpu.h b/include/linux/soc/adi/cpu.h
-index 065318442bbb..1e0fcb3f22d8 100644
---- a/include/linux/soc/adi/cpu.h
-+++ b/include/linux/soc/adi/cpu.h
-@@ -110,6 +110,7 @@ void     set_gptimer_config(struct sc5xx_gptimer *timer, uint16_t config);
- void     enable_gptimers(uint16_t mask);
- void     disable_gptimers(uint16_t mask);
- void     map_gptimers(void);
-+uint16_t get_gptimer_run(void);
- uint16_t get_gptimer_status(void);
- void     set_gptimer_status(uint16_t value);
- void     set_spu_securep_msec(uint16_t n, bool msec);

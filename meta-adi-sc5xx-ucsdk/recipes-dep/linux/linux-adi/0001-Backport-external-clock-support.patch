@@ -1,0 +1,158 @@
+From c78d34a38aa809168c56647cd3653dda2a492a76 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Thu, 5 Oct 2023 19:06:36 -0500
+Subject: [PATCH] Backport external clock support
+
+---
+ drivers/clocksource/timer-adi-adsp-sc5xx.c | 45 +++++++++++++++++-----
+ include/linux/soc/adi/cpu.h                | 21 ++++++++++
+ 2 files changed, 56 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/clocksource/timer-adi-adsp-sc5xx.c b/drivers/clocksource/timer-adi-adsp-sc5xx.c
+index b0247ec9490d..e6abe977b465 100644
+--- a/drivers/clocksource/timer-adi-adsp-sc5xx.c
++++ b/drivers/clocksource/timer-adi-adsp-sc5xx.c
+@@ -22,6 +22,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/sched_clock.h>
+ #include <linux/slab.h>
++#include <linux/soc/adi/cpu.h>
+ 
+ /*
+  * Shared gptimers registers
+@@ -82,12 +83,13 @@
+ #define TIMER_MODE_EXT_CLK  0x000e
+ #define TIMER_MODE_PININT   0x000f
+ 
++/* struct sc5xx_gptimer{}: moved to include/linux/soc/adi/cpu.h
+ struct sc5xx_gptimer {
+ 	int id;
+ 	int irq;
+ 	void __iomem *io_base;
+ };
+-
++*/
+ struct gptimer_counter {
+ 	struct counter_device counter;
+ };
+@@ -122,47 +124,70 @@ static struct clockevent_gptimer *to_clockevent_gptimer(struct clock_event_devic
+ /**
+  * Per gptimer accessors
+  */
+-static void set_gptimer_period(struct sc5xx_gptimer *timer, uint32_t period) {
++void set_gptimer_period(struct sc5xx_gptimer *timer, uint32_t period) {
+ 	writel(period, timer->io_base + GPTIMER_PER_OFF);
+ }
++EXPORT_SYMBOL(set_gptimer_period);
+ 
+-static void set_gptimer_pwidth(struct sc5xx_gptimer *timer, uint32_t value) {
++void set_gptimer_pwidth(struct sc5xx_gptimer *timer, uint32_t value) {
+ 	writel(value, timer->io_base + GPTIMER_WID_OFF);
+ }
++EXPORT_SYMBOL(set_gptimer_pwidth);
+ 
+-static void set_gptimer_delay(struct sc5xx_gptimer *timer, uint32_t value) {
++void set_gptimer_delay(struct sc5xx_gptimer *timer, uint32_t value) {
+ 	writel(value, timer->io_base + GPTIMER_DLY_OFF);
+ }
++EXPORT_SYMBOL(set_gptimer_delay);
+ 
+-static void set_gptimer_config(struct sc5xx_gptimer *timer, uint16_t config) {
++void set_gptimer_config(struct sc5xx_gptimer *timer, uint16_t config) {
+ 	writew(config, timer->io_base + GPTIMER_CFG_OFF);
+ }
++EXPORT_SYMBOL(set_gptimer_config);
+ 
+-static uint32_t get_gptimer_count(struct sc5xx_gptimer *timer) {
++uint32_t get_gptimer_count(struct sc5xx_gptimer *timer) {
+ 	return readl(timer->io_base + GPTIMER_CNT_OFF);
+ }
++EXPORT_SYMBOL(get_gptimer_count);
+ 
+ /**
+  * Accessors that redirect to the shared registers
+  */
+-static void gptimer_enable(struct sc5xx_gptimer *timer) {
++void gptimer_enable(struct sc5xx_gptimer *timer) {
+ 	writew(1 << timer->id, gptimer_controller.base + GPTIMER_RUN_SET);
+ }
++EXPORT_SYMBOL(gptimer_enable);
+ 
+-static void gptimer_disable(struct sc5xx_gptimer *timer) {
++void gptimer_disable(struct sc5xx_gptimer *timer) {
+ 	writew(1 << timer->id, gptimer_controller.base + GPTIMER_STOP_CFG_SET);
+ 	writew(1 << timer->id, gptimer_controller.base + GPTIMER_RUN_CLR);
+ }
++EXPORT_SYMBOL(gptimer_disable);
+ 
+-static void gptimer_clear_interrupt(struct sc5xx_gptimer *timer) {
++void gptimer_clear_interrupt(struct sc5xx_gptimer *timer) {
+ 	writew(1 << timer->id, gptimer_controller.base + GPTIMER_DATA_ILAT);
+ }
++EXPORT_SYMBOL(gptimer_clear_interrupt);
+ 
+-static bool gptimer_is_running(struct sc5xx_gptimer *timer) {
++bool gptimer_is_running(struct sc5xx_gptimer *timer) {
+ 	u32 stat = readw(gptimer_controller.base + GPTIMER_RUN);
+ 	u32 check = 1 << timer->id;
+ 	return (stat & check) == check;
+ }
++EXPORT_SYMBOL(gptimer_is_running);
++
++struct sc5xx_gptimer *gptimer_request(int id)
++{
++	struct sc5xx_gptimer *t = NULL;
++
++	if (id >= gptimer_controller.num_timers) {
++		pr_info("%s: id=%d >= total timers %d \n", __func__, id, gptimer_controller.num_timers);
++	}
++	else {
++		t = &gptimer_controller.timers[id];
++	}
++	return t;
++}
++EXPORT_SYMBOL(gptimer_request);
+ 
+ /**
+  * Scheduler/clocksource functions
+diff --git a/include/linux/soc/adi/cpu.h b/include/linux/soc/adi/cpu.h
+index 065318442bbb..f2883f2d407c 100644
+--- a/include/linux/soc/adi/cpu.h
++++ b/include/linux/soc/adi/cpu.h
+@@ -61,6 +61,26 @@
+ 
+ #define __BFP(m) u16 m; u16 __pad_##m
+ 
++#if 1  //struct sc5xx_gptimer{}: copied from drivers/clocksource/timer-adi-adsp-sc5xx.c
++struct sc5xx_gptimer {
++	int id;
++	int irq;
++	void __iomem *io_base;
++};
++
++/* The actual gptimer API */
++struct sc5xx_gptimer *gptimer_request(int id);
++void     set_gptimer_pwidth(struct sc5xx_gptimer *timer, uint32_t width);
++void     set_gptimer_period(struct sc5xx_gptimer *timer, uint32_t period);
++void     set_gptimer_delay(struct sc5xx_gptimer *timer, uint32_t delay);
++uint32_t get_gptimer_count(struct sc5xx_gptimer *timer);
++void     set_gptimer_config(struct sc5xx_gptimer *timer, uint16_t config);
++void     gptimer_enable(struct sc5xx_gptimer *timer);
++void     gptimer_disable(struct sc5xx_gptimer *timer);
++void     gptimer_clear_interrupt(struct sc5xx_gptimer *timer);
++bool     gptimer_is_running(struct sc5xx_gptimer *timer);
++
++#else //_legacy_
+ struct gptimer3 {
+ 	__BFP(config);
+ 	u32 counter;
+@@ -114,5 +134,6 @@ uint16_t get_gptimer_status(void);
+ void     set_gptimer_status(uint16_t value);
+ void     set_spu_securep_msec(uint16_t n, bool msec);
+ void     platform_ipi_init(void);
++#endif //_legacy_
+ 
+ #endif /* __MACH_CPU_H */
+-- 
+2.25.1
+
