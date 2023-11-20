@@ -1,0 +1,66 @@
+From ddaf1d102c4282dbca206d44259c6a5b6b77116f Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Mon, 20 Nov 2023 12:20:38 -0600
+Subject: [PATCH] SC598 Add external clock to dts
+
+---
+ arch/arm64/boot/dts/adi/sc598-som.dtsi | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/adi/sc598-som.dtsi b/arch/arm64/boot/dts/adi/sc598-som.dtsi
+index ef1e3e35b8fe..e57f55b18aff 100644
+--- a/arch/arm64/boot/dts/adi/sc598-som.dtsi
++++ b/arch/arm64/boot/dts/adi/sc598-som.dtsi
+@@ -124,6 +124,13 @@ &thermal {
+ 	/* adi,average; */
+ };
+ 
++&gptimer_counter {
++	/* enable PB_03 to work as TIMER0_TMR3 */
++	pinctrl-names = "default";
++	pinctrl-0 = <&extclkin_default>;
++	status = "okay";
++};
++
+ &uart0 {
+ 	/* enable-pin = <&ssw0 5 GPIO_ACTIVE_LOW>;	 UART0_EN */
+ 	/* hwflow-en-pin = <&ssw0 6 GPIO_ACTIVE_LOW>;  UART0_FLOW_EN */
+@@ -219,7 +226,9 @@ &i2c0 {
+ };
+ 
+ &i2c1 {
+-	status = "disabled";
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c1_pins>;
+ };
+ 
+ &i2c2 {
+@@ -334,6 +343,11 @@ &sram_mmap {
+ };
+ 
+ &pinctrl0 {
++	extclkin_default: extclkin_default_pins {
++		pins {
++			pinmux = <ADI_ADSP_PINMUX('B', 3, ADI_ADSP_PINFUNC_ALT0)>;
++		};
++	};
+ 	uart0_default: uart0_default_pins {
+ 		pins {
+ 			pinmux = <ADI_ADSP_PINMUX('A', 6, ADI_ADSP_PINFUNC_ALT1)>,
+@@ -393,6 +407,12 @@ pins {
+ 			         <ADI_ADSP_PINMUX('D', 4, ADI_ADSP_PINFUNC_ALT2)>;
+ 		};
+ 	};
++	i2c1_pins: i2c1_default_pins {
++		pins {
++			pinmux = <ADI_ADSP_PINMUX('B', 0, ADI_ADSP_PINFUNC_ALT1)>,
++			         <ADI_ADSP_PINMUX('B', 1, ADI_ADSP_PINFUNC_ALT1)>;
++		};
++	};
+ 	i2c2_pins: i2c2_default_pins {
+ 		pins {
+ 			pinmux = <ADI_ADSP_PINMUX('A', 14, ADI_ADSP_PINFUNC_ALT0)>,
+-- 
+2.25.1
+
