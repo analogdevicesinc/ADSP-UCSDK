@@ -364,7 +364,7 @@ static ssize_t device_read(struct file *filp,   /* ref: include/linux/fs.h   */
         // if user buffer length isn't enough, log this and return no bytes
         if (length < READ_BUFFER_SIZE) 
         {
-           dev_warn(extclkin_gpt.thisDev, "Device %s: read request had insufficient buffer size of %ld. Minimum required is %ld.\n", DEVICE_NAME, length, READ_BUFFER_SIZE);
+           dev_warn(extclkin_gpt.thisDev, "Device %s: read request had insufficient buffer size of %ld. Minimum required is %ld.\n", DEVICE_NAME, length, (long int) READ_BUFFER_SIZE);
             return -EINVAL;
         }
     
@@ -392,4 +392,3 @@ module_exit(gpt_clkin_exit);
 MODULE_LICENSE(DRIVER_LICENSE);
 MODULE_AUTHOR(DRIVER_AUTHOR);
 MODULE_DESCRIPTION(DRIVER_DESC);
-MODULE_SUPPORTED_DEVICE(DEVICE_NAME);
