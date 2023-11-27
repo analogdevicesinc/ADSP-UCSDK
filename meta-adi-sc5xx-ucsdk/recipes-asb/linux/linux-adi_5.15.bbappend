@@ -3,11 +3,8 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI:append = "\
             file://sram.cfg \
             file://REMOTEPROC.cfg \
-            file://disable_soc_snd.cfg \           
-"
-
-SRC_URI:append_adsp-sc594-som-ezkit = "\
-            file://0001-5_15_IOCTL-call-to-get-last-used-physical-address.patch \
+            file://disable_soc_snd.cfg \
+            file://0001-5_15_IOCTL-call-to-get-last-used-physical-address.patch \           
 "
 
 KERNEL_FEATURES:remove:adsp-sc573-ezkit = " ${WORKDIR}/feature/snd_ezkit.scc"
