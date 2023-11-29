@@ -1,18 +1,17 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI:append = "\ 
-            file://dep-5_4.cfg \            
-"
-SRC_URI:append:adsp-sc598-som-ezkit = "\
-            file://0001-5_15-Provide-gptimer-API-access-to-extclkingpt-modul.patch \
+            file://dep-5_4.cfg \
             file://0001-5_15-Diable-remoteproc-autoboot.patch \
+            file://0001-5_15-Provide-gptimer-API-access-to-extclkingpt-modul.patch \
+            file://0004-5_15-Add-headers-that-fix-build-errors-on-yocto-3.0.0.patch \
+"
+
+SRC_URI:append:adsp-sc598-som-ezkit = "\
             file://0002-5_15-SC598-extclkin-gpt-configure-gptimer-i2c-dts.patch \
 "
 
 SRC_URI:append:adsp-sc594-som-ezkit = "\
-			file://0001-5_15-Provide-gptimer-API-access-to-extclkingpt-modul.patch \
-            file://0001-5_15-Diable-remoteproc-autoboot.patch \
             file://0001-5_15-SC594-configure-gptimer-and-i2c-for-extclkingpt.patch \
-            file://0001-Change-IRQMODE-to-Width-delay.patch \
             file://0001-Fix-DELAY_REQ-error-for-dwmacs-above-v3_70.patch \
 "
 
