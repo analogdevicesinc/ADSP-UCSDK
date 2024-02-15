@@ -1,6 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI:append = "\ 
-            file://dep-5_4.cfg \
+            file://dep-5_15.cfg \
             file://0001-5_15-Diable-remoteproc-autoboot.patch \
             file://0001-5_15-Provide-gptimer-API-access-to-extclkingpt-modul.patch \
             file://0004-5_15-Add-headers-that-fix-build-errors-on-yocto-3.0.0.patch \
