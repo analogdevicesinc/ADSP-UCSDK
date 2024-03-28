@@ -3,17 +3,9 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI:append = "\
             file://sram.cfg \
             file://REMOTEPROC.cfg \
-            file://disable_soc_snd.cfg \           
+            file://disable_soc_snd.cfg \
+            file://0001-5_15_IOCTL-call-to-get-last-used-physical-address.patch \           
 "
-
-SRC_URI:append:adsp-sc594-som-ezkit = "\
-            file://0001-5_15_IOCTL-call-to-get-last-used-physical-address.patch \
-"
-SRC_URI:append:adsp-sc598-som-ezkit = "\
-            file://0001-5_15_IOCTL-call-to-get-last-used-physical-address.patch \
-            file://0001-SC598-family-k5_15-move-L2-to-20104000.patch \
-"
-
 KERNEL_FEATURES:remove:adsp-sc573-ezkit = " ${WORKDIR}/feature/snd_ezkit.scc"
 KERNEL_FEATURES:remove:adsp-sc589-ezkit = " ${WORKDIR}/feature/snd_ezkit.scc"
 KERNEL_FEATURES:remove:adsp-sc584-ezkit = " ${WORKDIR}/feature/snd_ezkit.scc"

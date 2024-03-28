@@ -1,0 +1,35 @@
+From c2cf7e15716ec238b2a9eb9ff7eeca070c6bf7d3 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Wed, 29 Nov 2023 09:07:46 -0600
+Subject: [PATCH] Add headers that fix build errors on yocto-3.0.0
+
+---
+ include/linux/soc/adi/cpu.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/include/linux/soc/adi/cpu.h b/include/linux/soc/adi/cpu.h
+index be72ce40aeda..2e3bbf0df3a0 100644
+--- a/include/linux/soc/adi/cpu.h
++++ b/include/linux/soc/adi/cpu.h
+@@ -86,6 +86,9 @@ void     gptimer_disable(struct sc5xx_gptimer *timer);
+ void     gptimer_clear_interrupt(struct sc5xx_gptimer *timer);
+ bool     gptimer_is_running(struct sc5xx_gptimer *timer);
+ 
++void     set_spu_securep_msec(uint16_t n, bool msec);
++void     platform_ipi_init(void);
++
+ #else //_legacy_
+ struct gptimer3 {
+ 	__BFP(config);
+@@ -138,8 +141,6 @@ void     disable_gptimers(uint16_t mask);
+ void     map_gptimers(void);
+ uint16_t get_gptimer_status(void);
+ void     set_gptimer_status(uint16_t value);
+-void     set_spu_securep_msec(uint16_t n, bool msec);
+-void     platform_ipi_init(void);
+ #endif //_legacy_
+ 
+ #endif /* __MACH_CPU_H */
+-- 
+2.25.1
+

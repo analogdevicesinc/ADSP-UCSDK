@@ -52,7 +52,7 @@
 #define MAX_LINE_LENGTH       (2 * NS_VALUE_MAX_DIGITS + 2)
 #define SECONDS_PER_ROLLOVER  429
 #define NS_PER_ROLLOVER       ((u64)SECONDS_PER_ROLLOVER * (u64)1000000000UL)
-#define GPT_NO                 3
+#define GPT_NO                 5
 #define GPT_MASK               (1<<GPT_NO)
 #define SUCCESS                0
 #define READ_BUFFER_SIZE       (MAX_LINE_LENGTH + 1)    
