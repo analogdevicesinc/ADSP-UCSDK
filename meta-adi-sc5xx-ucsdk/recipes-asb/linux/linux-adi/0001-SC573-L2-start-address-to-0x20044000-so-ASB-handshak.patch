@@ -1,0 +1,28 @@
+From d74ba0f0fd088c052ec8d1e322fb9b4098fffd16 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Thu, 28 Mar 2024 14:49:47 -0500
+Subject: [PATCH] SC573 L2 start address to 0x20044000 so ASB handshaking
+ address is not overwritten
+
+---
+ arch/arm/boot/dts/sc57x.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm/boot/dts/sc57x.dtsi b/arch/arm/boot/dts/sc57x.dtsi
+index 4cf630253f88..d4d1ff050100 100644
+--- a/arch/arm/boot/dts/sc57x.dtsi
++++ b/arch/arm/boot/dts/sc57x.dtsi
+@@ -89,8 +89,8 @@ sram1: sram-reserved@20004000 {
+ 		compatible = "mmio-sram";
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+-		reg = <0x20040000 0x40000>;
+-		ranges = <0 0x20040000 0x40000>; /* 256 KiB */
++		reg = <0x20044000 0x3C000>;
++		ranges = <0 0x20044000 0x3C000>; /* 240 KiB */
+ 	};
+ 
+ 	sys_clkin0: sys-clkin0@1 {
+-- 
+2.25.1
+

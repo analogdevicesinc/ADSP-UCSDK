@@ -7,6 +7,10 @@ SRC_URI:append = "\
             file://0001-5_15_IOCTL-call-to-get-last-used-physical-address.patch \           
 "
 
+SRC_URI:append:adsp-sc573-ezkit = "\
+            file://0001-SC573-L2-start-address-to-0x20044000-so-ASB-handshak.patch \
+"
+
 KERNEL_FEATURES:remove:adsp-sc573-ezkit = " ${WORKDIR}/feature/snd_ezkit.scc"
 KERNEL_FEATURES:remove:adsp-sc589-ezkit = " ${WORKDIR}/feature/snd_ezkit.scc"
 KERNEL_FEATURES:remove:adsp-sc584-ezkit = " ${WORKDIR}/feature/snd_ezkit.scc"

@@ -1,0 +1,52 @@
+From 62982bef61d448f459ceea5b45ffa7fbc1f2c979 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Tue, 19 Mar 2024 15:10:55 -0500
+Subject: [PATCH] Set TX/RX queues to 1
+
+---
+ arch/arm/boot/dts/sc594-som-ezkit.dts | 18 +-----------------
+ 1 file changed, 1 insertion(+), 17 deletions(-)
+
+diff --git a/arch/arm/boot/dts/sc594-som-ezkit.dts b/arch/arm/boot/dts/sc594-som-ezkit.dts
+index 7ccfce130661..e312f3124363 100644
+--- a/arch/arm/boot/dts/sc594-som-ezkit.dts
++++ b/arch/arm/boot/dts/sc594-som-ezkit.dts
+@@ -189,19 +189,11 @@ &emac0 {
+ 	snps,mtl-tx-config = <&emac0txconfig>;
+ 
+ 	emac0txconfig: tx-config {
+-		snps,tx-queues-to-use = <3>;
++		snps,tx-queues-to-use = <1>;
+ 
+ 		queue0 {
+ 			snps,dcb-algorithm;
+ 		};
+-
+-		queue1 {
+-			snps,dcb-algorithm;
+-		};
+-
+-		queue2 {
+-			snps,dcb-algorithm;
+-		};
+ 	};
+ 
+ 	emac0rxconfig: rx-config {
+@@ -210,14 +202,6 @@ emac0rxconfig: rx-config {
+ 		queue0 {
+ 			snps,dcb-algorithm;
+ 		};
+-
+-		queue1 {
+-			snps,dcb-algorithm;
+-		};
+-
+-		queue2 {
+-			snps,dcb-algorithm;
+-		};
+ 	};
+ 
+ 	mdio0 {
+-- 
+2.25.1
+
