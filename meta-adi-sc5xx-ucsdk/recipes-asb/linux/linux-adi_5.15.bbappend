@@ -7,6 +7,9 @@ SRC_URI:append = "\
             file://0001-5_15_IOCTL-call-to-get-last-used-physical-address.patch \           
 "
 
+SRC_URI:append:adsp-sc598-som-ezkit = "\
+            file://0001-SC598-Move-sram-start-address-to-20044000.patch \
+"
 SRC_URI:append:adsp-sc573-ezkit = "\
             file://0001-SC573-L2-start-address-to-0x20044000-so-ASB-handshak.patch \
 "
