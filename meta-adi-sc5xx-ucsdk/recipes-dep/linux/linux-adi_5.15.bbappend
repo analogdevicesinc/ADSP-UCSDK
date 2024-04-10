@@ -21,10 +21,4 @@ SRC_URI:append:adsp-sc573-ezkit = "\
             file://dep_latency.cfg \
 "
 
-SRC_URI:append:adsp-sc598-som-ezkit = "\
-			file://0001-5_15-Provide-gptimer-API-access-to-extclkingpt-modul.patch \
-            file://0001-5_15-Diable-remoteproc-autoboot.patch \
-            file://0001-SC598-5_15-configure-gptimer-and-i2c-for-extclkin-gp.patch \
-"
-
 COMPATIBLE_MACHINE = "(adsp-sc573-ezkit|adsp-sc584-ezkit|adsp-sc589-ezkit|adsp-sc589-mini|adsp-sc594-som-ezkit|adsp-sc598-som-ezkit)"
