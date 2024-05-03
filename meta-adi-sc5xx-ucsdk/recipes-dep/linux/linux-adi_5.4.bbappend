@@ -12,7 +12,8 @@ SRC_URI_append_adsp-sc584-ezkit = "\
             file://0001-Changing-core-timer-from-0-1-to-2-3.patch \
 "
 SRC_URI_append_adsp-sc573-ezkit = "\
-            file://0001-sc57x-hrtimer-support.patch \
+            file://0001-5_4-External-clock-support-with-gptimer.patch \
+            file://0002-SC57x-enable-gpt_ctr-and-assign-TMR5-to-PC15.patch \
 "
 SRC_URI_append_adsp-sc594-som-ezkit = "\
             file://0001-sc59x-hrtimer-support_5_4.patch \
