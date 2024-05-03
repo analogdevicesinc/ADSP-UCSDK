@@ -14,7 +14,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI_append = "\
             file://sram.cfg \
             file://REMOTEPROC.cfg \
-            file://disable_soc_snd.cfg \           
+            file://disable_soc_snd.cfg \
 "
 
 SRC_URI_append_adsp-sc594-som-ezkit = "\
@@ -29,6 +29,7 @@ SRC_URI_append_adsp-sc584-ezkit = "\
 "
 SRC_URI_append_adsp-sc573-ezkit = "\
             file://0001-SC57x-Expand-sram1-to-end-of-L2-memory.patch \
+            file://0001-5_4_IOCTL-call-to-get-last-used-physical-address.patch \
 "
 SRC_URI_append_adsp-sc598-som-ezkit = "\
             file://0001-SC598-family-move-L2-region-to-20104000.patch \
