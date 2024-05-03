@@ -28,6 +28,7 @@ IMAGE_INSTALL_append = " \
     gdbserver \ 
 	sram-mmap-test \
 	cgroupfs-mount \
+	procps \
 "
 
 #Packages to remove
