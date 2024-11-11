@@ -1,0 +1,30 @@
+From 5cbefec467fb92aa98817c34e1d713aca41d3692 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Thu, 7 Nov 2024 15:08:21 -0600
+Subject: [PATCH] 312 SC598 Disable i2s4 and dai1 SRU
+
+---
+ arch/arm64/boot/dts/adi/sc598-som-ezkit.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts b/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
+index 96287238f741..4ac6dc18819f 100644
+--- a/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
++++ b/arch/arm64/boot/dts/adi/sc598-som-ezkit.dts
+@@ -280,11 +280,11 @@ dp83848: ethernet-phy@1 {
+ &i2s4 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&sru_dai1>;
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &sru_ctrl_dai1 {
+-	status = "okay";
++	status = "disabled";
+ 
+ 	sru_dai1: sru_dai1_mux {
+ 		route {
+-- 
+2.25.1
+

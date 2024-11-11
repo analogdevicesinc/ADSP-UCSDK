@@ -1,0 +1,36 @@
+From 2625bfec13db8f067be38ca18be60a4996824065 Mon Sep 17 00:00:00 2001
+From: Harvin Almeida <harvin.almeida@analog.com>
+Date: Thu, 7 Nov 2024 09:09:39 -0600
+Subject: [PATCH] 312 SC598 L2 sram start at 0x20044000
+
+---
+ arch/arm64/boot/dts/adi/sc598-som.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/adi/sc598-som.dtsi b/arch/arm64/boot/dts/adi/sc598-som.dtsi
+index 92749e6cf9eb..544f04be6d56 100644
+--- a/arch/arm64/boot/dts/adi/sc598-som.dtsi
++++ b/arch/arm64/boot/dts/adi/sc598-som.dtsi
+@@ -22,15 +22,15 @@ memory@90000000 {
+ 		reg = <0x90000000 0x0e000000>;
+ 	};
+ 
+-	memory@20040000 {
++	memory@20044000 {
+ 		device_type = "memory";
+-		reg = <0x20040000 0x40000>;
++		reg = <0x20044000 0x3C000>;
+ 	};
+ 
+ 	reserved-memory {
+-		sram1_res: sram1-reserved@20040000 {
++		sram1_res: sram1-reserved@20044000 {
+ 			compatible = "adi,sram-access";
+-			reg = <0x20040000 0x40000>;
++			reg = <0x20044000 0x3C000>;
+ 		};
+ 
+ 		vdev0vrings: vdev0vring0@20080000 {
+-- 
+2.25.1
+
