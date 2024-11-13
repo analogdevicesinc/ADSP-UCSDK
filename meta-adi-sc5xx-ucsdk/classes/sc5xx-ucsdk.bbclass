@@ -19,15 +19,16 @@ IMAGE_INSTALL:append:adsp-sc598-som-ezkit = " \
 IMAGE_INSTALL:append:adsp-sc594-som-ezkit = " jq "
 
 # Packages to add
-IMAGE_INSTALL:append = " \ 
+IMAGE_INSTALL:append = " \
 	libstdc++ \
 	tar \
 	bash \
     nano \
     ethtool \
-    gdbserver \ 
+    gdbserver \
 	sram-mmap-test \
 	cgroupfs-mount \
+	procps \
 "
 
 #Packages to remove
