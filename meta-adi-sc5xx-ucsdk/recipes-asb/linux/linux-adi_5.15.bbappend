@@ -11,6 +11,9 @@ SRC_URI:append = "\
 SRC_URI:append:adsp-sc598-som-ezkit = "\
             file://0002-312-SC598-L2-sram-start-at-0x20044000.patch \
 "
+SRC_URI:append:adsp-sc594-som-ezkit = "\
+            file://0002-312-SC594-L2-sram-start-at-0x20044000.patch \
+"
 SRC_URI:append:adsp-sc573-ezkit = "\
             file://0001-SC573-L2-start-address-to-0x20044000-so-ASB-handshak.patch \
 "
