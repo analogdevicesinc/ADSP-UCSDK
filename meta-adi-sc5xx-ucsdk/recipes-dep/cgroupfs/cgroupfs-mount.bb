@@ -2,12 +2,12 @@ inherit update-rc.d
 
 DESCRIPTION = "Light-weight package to set up cgroupfs mounts"
 DEPENDS = "linux-adi"
-LICENSE = "GPLv3+"
+LICENSE = "GPL-3.0-or-later"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=1ebbd3e34237af26da5dc08a4e440464"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-CGROUPFS_GIT_URI ?= "git://github.com/tianon/cgroupfs-mount.git"
+CGROUPFS_GIT_URI ?= "git://github.com/tianon/cgroupfs-mount.git;branch=master"
 CGROUPFS_GIT_PROTOCOL = "https"
 
 SRCREV = "190a219fcca93c352f280fa4f24a702f804d8eed"
