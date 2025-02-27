@@ -1,0 +1,62 @@
+From a013cd7567203b15959044059476b10652cd15fd Mon Sep 17 00:00:00 2001
+From: Harvin Bryce D'Almeida <harvin.almeida@analog.com>
+Date: Thu, 27 Feb 2025 20:49:11 +0000
+Subject: [PATCH] 312 SC594 Disabled Audio SPORT,DMA and DAI SRU
+
+Signed-off-by: Harvin Bryce D'Almeida <harvin.almeida@analog.com>
+---
+ arch/arm/boot/dts/sc594-som-ezkit.dts | 5 +++--
+ arch/arm/boot/dts/sc59x.dtsi          | 4 ++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm/boot/dts/sc594-som-ezkit.dts b/arch/arm/boot/dts/sc594-som-ezkit.dts
+index 64952a76ae33..625950747838 100644
+--- a/arch/arm/boot/dts/sc594-som-ezkit.dts
++++ b/arch/arm/boot/dts/sc594-som-ezkit.dts
+@@ -20,6 +20,7 @@ sound {
+ 			compatible = "adi,sc5xx-asoc-card";
+ 			adi,cpu-dai = <&i2s4>;
+ 			adi,codec = <&adau1962>, <&adau1979>;
++			status = "disabled";
+ 		};
+ 	};
+ };
+@@ -238,11 +239,11 @@ dp83848: ethernet-phy@1 {
+ &i2s4 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&sru_dai1>;
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &sru_ctrl_dai1 {
+-	status = "okay";
++	status = "disabled";
+ 
+ 	sru_dai1: sru_dai1_mux {
+ 		route {
+diff --git a/arch/arm/boot/dts/sc59x.dtsi b/arch/arm/boot/dts/sc59x.dtsi
+index ae3b06b5bd1e..e18fb1c47aa6 100644
+--- a/arch/arm/boot/dts/sc59x.dtsi
++++ b/arch/arm/boot/dts/sc59x.dtsi
+@@ -1144,7 +1144,7 @@ spi2_rx: channel@27 {
+ 		sport0_dma_cluster: dma@0x31022000 {
+ 			compatible = "adi,dma-controller";
+ 			reg = <0x31022000 0x1000>;
+-			status = "okay";
++			status = "disabled";
+ 			#dma-cells = <1>;
+ 
+ 			sport0a: channel@0 {
+@@ -1169,7 +1169,7 @@ sport0b: channel@1 {
+ 		sport4_dma_cluster: dma@0x31023000 {
+ 			compatible = "adi,dma-controller";
+ 			reg = <0x31023000 0x1000>;
+-			status = "okay";
++			status = "disabled";
+ 			#dma-cells = <1>;
+ 
+ 			sport4a: channel@10 {
+-- 
+2.25.1
+
