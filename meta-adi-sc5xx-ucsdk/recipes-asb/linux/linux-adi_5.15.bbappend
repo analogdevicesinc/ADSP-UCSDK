@@ -4,14 +4,15 @@ SRC_URI:append = "\
             file://sram.cfg \
             file://REMOTEPROC.cfg \
             file://disable_soc_snd.cfg \
-            file://0001-312-IOCTL-to-get-last-used-physical-address.patch \
             file://0003-312-Set-SRAM-MMAPs-to-Non-cached.patch \
 "
 
 SRC_URI:append:adsp-sc598-som-ezkit = "\
+            file://0001-312-IOCTL-to-get-last-used-physical-address.patch \
             file://0002-312-SC598-L2-sram-start-at-0x20044000.patch \
 "
 SRC_URI:append:adsp-sc594-som-ezkit = "\
+            file://0001-312-ARM32-get-last-use-physical-address-IOCTL.patch \
             file://0002-312-SC594-L2-sram-start-at-0x20044000.patch \
 "
 SRC_URI:append:adsp-sc573-ezkit = "\
