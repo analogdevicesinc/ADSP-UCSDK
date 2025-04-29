@@ -15,6 +15,7 @@ SRC_URI:append:adsp-sc598-som-ezkit = "\
 SRC_URI:append:adsp-sc594-som-ezkit = "\
             file://0002-5_15-SC594-configure-gptimer-and-i2c-for-extclkingpt.patch \
             file://0003-312-SC594-Disabled-Audio-SPORT-DMA-and-DAI-SRU.patch \
+            file://0004-312-SC594-Remove-ADAU-SRU-DAI-definitions.patch \
 "
 
 SRC_URI:append:adsp-sc573-ezkit = "\
